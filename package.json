@@ -1,0 +1,32 @@
+{
+  "name": "backend-prisma-graphql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "npx tsc",
+    "start:dev": "nodemon",
+    "generate": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.14.0",
+    "apollo-server": "^3.12.0",
+    "dotenv": "^16.0.3",
+    "graphql": "^16.6.0",
+    "graphql-fields": "^2.0.3",
+    "graphql-scalars": "^1.21.3",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "2.0.0-beta.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.1.3",
+    "nodemon": "^2.0.22",
+    "prisma": "^4.14.0",
+    "tslib": "^2.5.0",
+    "typegraphql-prisma": "^0.25.1",
+    "typescript": "^5.0.4"
+  },
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
+  }
+}
