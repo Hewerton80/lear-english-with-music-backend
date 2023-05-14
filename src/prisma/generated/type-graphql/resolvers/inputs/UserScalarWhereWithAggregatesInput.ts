@@ -1,42 +1,58 @@
-import * as TypeGraphQL from 'type-graphql'
-import * as GraphQLScalars from 'graphql-scalars'
-import { Prisma } from '@prisma/client'
-import { DecimalJSScalar } from '../../scalars'
-import { IntWithAggregatesFilter } from '../inputs/IntWithAggregatesFilter'
-import { StringNullableWithAggregatesFilter } from '../inputs/StringNullableWithAggregatesFilter'
-import { StringWithAggregatesFilter } from '../inputs/StringWithAggregatesFilter'
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
+import { DateTimeWithAggregatesFilter } from "../inputs/DateTimeWithAggregatesFilter";
+import { EnumRoleWithAggregatesFilter } from "../inputs/EnumRoleWithAggregatesFilter";
+import { StringWithAggregatesFilter } from "../inputs/StringWithAggregatesFilter";
+import { UuidWithAggregatesFilter } from "../inputs/UuidWithAggregatesFilter";
 
-@TypeGraphQL.InputType('UserScalarWhereWithAggregatesInput', {
-  isAbstract: true,
+@TypeGraphQL.InputType("UserScalarWhereWithAggregatesInput", {
+  isAbstract: true
 })
 export class UserScalarWhereWithAggregatesInput {
-  @TypeGraphQL.Field((_type) => [UserScalarWhereWithAggregatesInput], {
-    nullable: true,
+  @TypeGraphQL.Field(_type => [UserScalarWhereWithAggregatesInput], {
+    nullable: true
   })
-  AND?: UserScalarWhereWithAggregatesInput[] | undefined
+  AND?: UserScalarWhereWithAggregatesInput[] | undefined;
 
-  @TypeGraphQL.Field((_type) => [UserScalarWhereWithAggregatesInput], {
-    nullable: true,
+  @TypeGraphQL.Field(_type => [UserScalarWhereWithAggregatesInput], {
+    nullable: true
   })
-  OR?: UserScalarWhereWithAggregatesInput[] | undefined
+  OR?: UserScalarWhereWithAggregatesInput[] | undefined;
 
-  @TypeGraphQL.Field((_type) => [UserScalarWhereWithAggregatesInput], {
-    nullable: true,
+  @TypeGraphQL.Field(_type => [UserScalarWhereWithAggregatesInput], {
+    nullable: true
   })
-  NOT?: UserScalarWhereWithAggregatesInput[] | undefined
+  NOT?: UserScalarWhereWithAggregatesInput[] | undefined;
 
-  @TypeGraphQL.Field((_type) => IntWithAggregatesFilter, {
-    nullable: true,
+  @TypeGraphQL.Field(_type => UuidWithAggregatesFilter, {
+    nullable: true
   })
-  id?: IntWithAggregatesFilter | undefined
+  id?: UuidWithAggregatesFilter | undefined;
 
-  @TypeGraphQL.Field((_type) => StringWithAggregatesFilter, {
-    nullable: true,
+  @TypeGraphQL.Field(_type => StringWithAggregatesFilter, {
+    nullable: true
   })
-  email?: StringWithAggregatesFilter | undefined
+  email?: StringWithAggregatesFilter | undefined;
 
-  @TypeGraphQL.Field((_type) => StringNullableWithAggregatesFilter, {
-    nullable: true,
+  @TypeGraphQL.Field(_type => StringWithAggregatesFilter, {
+    nullable: true
   })
-  name?: StringNullableWithAggregatesFilter | undefined
+  name?: StringWithAggregatesFilter | undefined;
+
+  @TypeGraphQL.Field(_type => EnumRoleWithAggregatesFilter, {
+    nullable: true
+  })
+  role?: EnumRoleWithAggregatesFilter | undefined;
+
+  @TypeGraphQL.Field(_type => StringWithAggregatesFilter, {
+    nullable: true
+  })
+  password?: StringWithAggregatesFilter | undefined;
+
+  @TypeGraphQL.Field(_type => DateTimeWithAggregatesFilter, {
+    nullable: true
+  })
+  createdAt?: DateTimeWithAggregatesFilter | undefined;
 }

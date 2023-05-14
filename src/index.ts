@@ -1,30 +1,33 @@
-import * as dotenv from 'dotenv'
 import 'reflect-metadata'
+import * as dotenv from 'dotenv'
 import { buildSchema } from 'type-graphql'
-import { ApolloServer } from 'apollo-server'
+import { ApolloServer } from '@apollo/server'
+import { startStandaloneServer } from '@apollo/server/standalone'
 import { resolve } from 'path'
-import { PrismaClient } from '@prisma/client'
 import { prismaClient } from './prisma/client'
-import { UserResolver } from './modules/user/user.resolver'
-
+import { Container } from 'typedi'
+// import { resolvers } from './modules'
+import { resolvers } from './prisma/generated/type-graphql'
 dotenv.config()
-interface Context {
-  prisma: PrismaClient
-}
 
 async function main() {
+  await prismaClient.$connect()
+
   const schema = await buildSchema({
-    resolvers: [UserResolver],
+    resolvers,
     emitSchemaFile: resolve(__dirname, './graphql/generated-schema.graphql'),
     validate: false,
+    // container: Container,
   })
-  await prismaClient.$connect()
-  const server = new ApolloServer({
-    schema,
-    context: (): Context => ({ prisma: prismaClient }),
-    cors: true,
+
+  const server = new ApolloServer<ApolloContext>({ schema })
+
+  const PORT = process.env.PORT || 3001
+  const { url } = await startStandaloneServer(server, {
+    context: async () => ({ prisma: prismaClient }),
+    listen: { port: Number(PORT) },
   })
-  const { url } = await server.listen(3001)
+
   console.log(`🚀 Application is running on: ${url}`)
   console.log(`💻 GraphQL Playground: ${url}graphql`)
 }

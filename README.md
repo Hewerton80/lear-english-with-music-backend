@@ -1,24 +1,36 @@
 ## Getting started
 
 ```bash
-#Install dependencies
-$ yarn install
+#Install global dependencies
+$ npm install -g ts-node prisma nodemon
 
-#Generate artifacts (e.g. Prisma Client)
-$ yarn generate
+#Install dependencies
+$ npm install
+
+#Pull the schema from an existing database, updating the Prisma schema
+$ npm run generate
+
+#Create migrations from your Prisma schema, apply them to the database, generate artifacts (e.g. Prisma Client)$ npm run generate
+$ npm run migrate
+
+#Pull the schema from an existing database, updating the Prisma schema
+$ npm run push
+
+#The command used to populate the database
+$ npm run seed
 ```
 
 ## Running the app
 
 ```bash
 # development watch mode
-$ yarn start:dev
+$ npm run start:dev
 
 # build
-$ yarn build
+$ npm run build
 
 # production mode
-$ yarn run start:prod
+$ npm run start:prod
 ```
 
 ## Prisma CLI
@@ -33,6 +45,9 @@ $ yarn run start:prod
   #Create migrations from your Prisma schema, apply them to the database, generate artifacts (e.g. Prisma Client)
   $ prisma migrate dev
 
+  #The command used to populate the database
+  $ prisma db seed
+
   #Pull the schema from an existing database, updating the Prisma schema
   $ prisma db pull
 
@@ -44,4 +59,5 @@ $ yarn run start:prod
 
   #Format your Prisma schema
   $ prisma format
+
 ```

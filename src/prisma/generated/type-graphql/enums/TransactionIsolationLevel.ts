@@ -1,9 +1,12 @@
-import * as TypeGraphQL from 'type-graphql'
+import * as TypeGraphQL from "type-graphql";
 
 export enum TransactionIsolationLevel {
-  Serializable = 'Serializable',
+  ReadUncommitted = "ReadUncommitted",
+  ReadCommitted = "ReadCommitted",
+  RepeatableRead = "RepeatableRead",
+  Serializable = "Serializable"
 }
 TypeGraphQL.registerEnumType(TransactionIsolationLevel, {
-  name: 'TransactionIsolationLevel',
+  name: "TransactionIsolationLevel",
   description: undefined,
-})
+});
