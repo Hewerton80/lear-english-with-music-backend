@@ -29,10 +29,7 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Query(() => [User])
-  getUsers(
-    @Info() info: GraphQLResolveInfo,
-    @Args() findManyUserArgs?: FindManyUserArgs
-  ) {
+  getUsers(@Args() findManyUserArgs?: FindManyUserArgs) {
     return this.userService.findMany(findManyUserArgs)
   }
 
