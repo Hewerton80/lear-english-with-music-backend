@@ -6,9 +6,10 @@
   "scripts": {
     "build": "npx tsc",
     "start:dev": "nodemon",
+    "start:prod": "npm run build && node dist/index.js",
     "migrate": "prisma migrate dev",
     "push": "prisma db push",
-    "generate": "prisma generate --skip-seed flag",
+    "generate": "prisma generate",
     "seed": "prisma db seed"
   },
   "dependencies": {

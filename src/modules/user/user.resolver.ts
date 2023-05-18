@@ -38,7 +38,7 @@ export class UserResolver {
   })
   posts(@Root() user: User, @Args() userPostArgs: UserPostArgs = {}) {
     return prismaClient.user
-      .findUniqueOrThrow({
+      .findUnique({
         where: { id: user.id },
         // include: { Post: { where: postWhereInput } },
       })

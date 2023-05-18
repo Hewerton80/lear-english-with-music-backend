@@ -101,6 +101,7 @@ input NestedUuidFilter {
 }
 
 type Post {
+  author(cursor: PostWhereUniqueInput, distinct: [PostScalarFieldEnum!], orderBy: [PostOrderByWithRelationInput!], skip: Int, take: Int, where: PostWhereInput): [User!]!
   authorId: String!
   content: String!
   id: String!

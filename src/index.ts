@@ -11,7 +11,7 @@ import { resolvers } from './modules'
 dotenv.config()
 
 async function main() {
-  // await prismaClient.$connect()
+  await prismaClient.$connect()
 
   const schema = await buildSchema({
     resolvers,

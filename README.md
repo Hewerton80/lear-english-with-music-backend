@@ -10,9 +10,6 @@ $ npm install
 #Pull the schema from an existing database, updating the Prisma schema
 $ npm run generate
 
-#Create migrations from your Prisma schema, apply them to the database, generate artifacts (e.g. Prisma Client)$ npm run generate
-$ npm run migrate
-
 #Pull the schema from an existing database, updating the Prisma schema
 $ npm run push
 

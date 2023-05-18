@@ -10,10 +10,10 @@ import {
 import { getRange } from '../utis/getRange'
 import { getRandomIntInclusive } from '../utis/getRandomIntInclusive'
 import { hash } from 'bcrypt'
+import { getRamdomKeyFromAObject } from '../utis/getRamdomKeyFromAObject'
 
 const prismaClient = new PrismaClient()
 async function main() {
-  const arrayRoles = Object.keys(Role) as (keyof typeof Role)[]
   const password = await hash('Senha123', 10)
 
   const usersData: UserCreateManyInput[] = getRange(500).map(() => ({
@@ -21,7 +21,7 @@ async function main() {
     email: faker.internet.email(),
     password,
     name: faker.internet.userName(),
-    role: arrayRoles[getRandomIntInclusive(0, arrayRoles.length - 1)],
+    role: getRamdomKeyFromAObject(Role),
     createdAt: faker.date.past(),
   }))
 
@@ -29,12 +29,11 @@ async function main() {
     data: usersData,
   })
 
-  const arrayStatus = Object.keys(Status) as (keyof typeof Status)[]
   const usersIdArray = usersData.map(({ id }) => id)
   const postsData: PostCreateManyInput[] = getRange(1000).map(() => ({
     authorId: usersIdArray[getRandomIntInclusive(0, usersIdArray.length - 1)],
     content: faker.lorem.text(),
-    status: arrayStatus[getRandomIntInclusive(0, arrayStatus.length - 1)],
+    status: getRamdomKeyFromAObject(Status),
     title: faker.lorem.text(),
   }))
   await prismaClient.post.createMany({ data: postsData })
