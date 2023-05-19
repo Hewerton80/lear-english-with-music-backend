@@ -47,7 +47,7 @@ input EnumStatusFilter {
 
 type Mutation {
   updatePost(postUpdateInput: PostUpdateInput!, postWhereUniqueInput: PostWhereUniqueInput!): Post!
-  updateUser(userUpdateInput: UserUpdateInput!, userWhereUniqueInput: UserWhereUniqueInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
 }
 
 input NestedDateTimeFilter {
@@ -98,6 +98,13 @@ input NestedUuidFilter {
   lte: String
   not: NestedUuidFilter
   notIn: [String!]
+}
+
+type Pagination {
+  currentPage: Float!
+  docs: [String!]!
+  perPage: Float!
+  totalDocs: Float!
 }
 
 type Post {
@@ -243,7 +250,7 @@ type Query {
   post(where: PostWhereUniqueInput!): Post!
   posts(cursor: PostWhereUniqueInput, distinct: [PostScalarFieldEnum!], orderBy: [PostOrderByWithRelationInput!], skip: Int, take: Int, where: PostWhereInput): [Post!]!
   user(where: UserWhereUniqueInput!): User!
-  userCount(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): Float!
+  userCount(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): Pagination!
   users(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
 }
 

@@ -1,4 +1,13 @@
-import { Arg, Args, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql'
+import {
+  Arg,
+  Args,
+  Ctx,
+  FieldResolver,
+  Mutation,
+  Query,
+  Resolver,
+  Root,
+} from 'type-graphql'
 import {
   PostWhereUniqueInput,
   FindManyPostArgs,
@@ -20,24 +29,24 @@ export class PostResolver {
   ) {}
 
   @Query(() => [Post])
-  posts(@Args() findManyPostArgs?: FindManyPostArgs) {
+  posts(@Ctx() ctx: ApolloContext, @Args() findManyPostArgs?: FindManyPostArgs) {
     return this.postService.findMany(findManyPostArgs)
   }
 
   @Query(() => Post)
-  post(@Args() findUniquePostArgs?: FindUniquePostArgs) {
+  post(@Ctx() ctx: ApolloContext, @Args() findUniquePostArgs?: FindUniquePostArgs) {
     return this.postService.findOne(findUniquePostArgs)
   }
 
   @FieldResolver(() => User, { nullable: false })
-  author(@Root() post: Post) {
+  author(@Ctx() ctx: ApolloContext, @Root() post: Post) {
     return this.userService.findOne({
       where: { id: post.authorId },
     })
   }
 
   @Query(() => Number)
-  userCount(@Args() findManyPostsArgs?: FindManyPostArgs) {
+  userCount(@Ctx() ctx: ApolloContext, @Args() findManyPostsArgs?: FindManyPostArgs) {
     return this.postService.count(findManyPostsArgs)
   }
 
