@@ -1,27 +1,15 @@
-import {
-  Arg,
-  Args,
-  FieldResolver,
-  Info,
-  Mutation,
-  Query,
-  Resolver,
-  Root,
-} from 'type-graphql'
+import { Arg, Args, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql'
 import {
   UserWhereUniqueInput,
   FindManyUserArgs,
   FindUniqueUserArgs,
   User,
   UserUpdateInput,
-  PostWhereInput,
   UserPostArgs,
   Post,
 } from '../../prisma/generated/type-graphql'
 import { UserService } from './user.service'
 import { Service } from 'typedi'
-import { GraphQLResolveInfo } from 'graphql'
-import { prismaClient } from '../../prisma/client'
 
 @Service()
 @Resolver(User)
@@ -29,7 +17,7 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Query(() => [User])
-  getUsers(@Args() findManyUserArgs?: FindManyUserArgs) {
+  users(@Args() findManyUserArgs?: FindManyUserArgs) {
     return this.userService.findMany(findManyUserArgs)
   }
 
@@ -37,17 +25,17 @@ export class UserResolver {
     nullable: false,
   })
   posts(@Root() user: User, @Args() userPostArgs: UserPostArgs = {}) {
-    return prismaClient.user
-      .findUnique({
-        where: { id: user.id },
-        // include: { Post: { where: postWhereInput } },
-      })
-      .Post(userPostArgs)
+    return this.userService.findOne({ where: { id: user.id } }).Post(userPostArgs)
   }
 
   @Query(() => User)
-  getUser(@Args() findUniqueUserArgs?: FindUniqueUserArgs) {
+  user(@Args() findUniqueUserArgs?: FindUniqueUserArgs) {
     return this.userService.findOne(findUniqueUserArgs)
+  }
+
+  @Query(() => Number)
+  userCount(@Args() findManyUserArgs?: FindManyUserArgs) {
+    return this.userService.count(findManyUserArgs)
   }
 
   @Mutation(() => User)

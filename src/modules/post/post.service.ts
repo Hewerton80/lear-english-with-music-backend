@@ -16,6 +16,9 @@ export class PostService {
   findOne(findUniquePostArgs?: FindUniquePostArgs) {
     return prismaClient.post.findUnique(findUniquePostArgs)
   }
+  count(findManyPostsArgs?: FindManyPostArgs) {
+    return prismaClient.post.count(findManyPostsArgs)
+  }
 
   update(postWhereUniqueInput: PostWhereUniqueInput, postUpdateInput: PostUpdateInput) {
     return prismaClient.post.update({

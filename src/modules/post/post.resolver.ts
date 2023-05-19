@@ -2,56 +2,43 @@ import { Arg, Args, FieldResolver, Mutation, Query, Resolver, Root } from 'type-
 import {
   PostWhereUniqueInput,
   FindManyPostArgs,
-  PostCountAggregate,
-  UserRelationsResolver,
-  PostRelationsResolver,
-  // Autho
   FindUniquePostArgs,
   Post,
   PostUpdateInput,
   User,
-  UserPostArgs,
 } from '../../prisma/generated/type-graphql'
 import { PostService } from './post.service'
 import { Service } from 'typedi'
-import { prismaClient } from '../../prisma/client'
-import {
-  transformCountFieldIntoSelectRelationsCount,
-  transformInfoIntoPrismaArgs,
-} from '../../prisma/generated/type-graphql/helpers'
-import { GraphQLResolveInfo } from 'graphql'
+import { UserService } from '../user/user.service'
 
 @Service()
 @Resolver(Post)
 export class PostResolver {
-  constructor(private readonly postService: PostService) {}
+  constructor(
+    private readonly postService: PostService,
+    private readonly userService: UserService
+  ) {}
 
   @Query(() => [Post])
-  getPosts(@Args() findManyPostArgs?: FindManyPostArgs) {
+  posts(@Args() findManyPostArgs?: FindManyPostArgs) {
     return this.postService.findMany(findManyPostArgs)
   }
 
   @Query(() => Post)
-  getPost(@Args() findUniquePostArgs?: FindUniquePostArgs) {
+  post(@Args() findUniquePostArgs?: FindUniquePostArgs) {
     return this.postService.findOne(findUniquePostArgs)
   }
 
-  @FieldResolver(() => [User], { nullable: false })
-  author(
-    @Root() post: Post,
-    @Args() userPostArgs: UserPostArgs = {},
-    info: GraphQLResolveInfo
-  ) {
-    const { _count } = transformInfoIntoPrismaArgs(info)
+  @FieldResolver(() => User, { nullable: false })
+  author(@Root() post: Post) {
+    return this.userService.findOne({
+      where: { id: post.authorId },
+    })
+  }
 
-    return prismaClient.post
-      .findUniqueOrThrow({
-        where: { id: post.id },
-        // include: { Post: { where: postWhereInput } },
-      })
-      .author({
-        ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
-      })
+  @Query(() => Number)
+  userCount(@Args() findManyPostsArgs?: FindManyPostArgs) {
+    return this.postService.count(findManyPostsArgs)
   }
 
   @Mutation(() => Post)

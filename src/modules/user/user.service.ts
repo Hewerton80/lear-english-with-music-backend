@@ -18,6 +18,10 @@ export class UserService {
     return prismaClient.user.findUnique(findUniqueUserArgs)
   }
 
+  count(findManyUserArgs?: FindManyUserArgs) {
+    return prismaClient.user.count(findManyUserArgs)
+  }
+
   update(userWhereUniqueInput: UserWhereUniqueInput, userUpdateInput: UserUpdateInput) {
     return prismaClient.user.update({
       where: userWhereUniqueInput,
