@@ -1,41 +1,36 @@
+import { Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql'
 import {
-  Arg,
-  Args,
-  Ctx,
-  FieldResolver,
-  Mutation,
-  Query,
-  Resolver,
-  Root,
-} from 'type-graphql'
-import {
-  UserWhereUniqueInput,
   FindManyUserArgs,
   FindUniqueUserArgs,
   User,
-  UserUpdateInput,
   UpdateOneUserArgs,
   UserPostArgs,
   Post,
 } from '../../prisma/generated/type-graphql'
 import { Service } from 'typedi'
-import { UserService } from './user.service'
-import { GetPaginedDocsParans, getPaginedDocs } from '../../utis/getPaginadDocs'
-import { Pagination } from '../../common/resolvers/pagination.resolver'
+import { prismaPagination } from '../../helpers/getPrismaPagination'
+import { User as PrismaUser, Prisma } from '@prisma/client'
+import { PaginedUser } from './user.model'
+import { PaginationArgs } from '../../common/args/pagination.args'
 @Service()
 @Resolver(User)
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
-
-  @Query(() => [User])
-  users(@Ctx() ctx: ApolloContext, @Args() findManyUserArgs?: FindManyUserArgs) {
-    return ctx.prisma.user.findMany(findManyUserArgs)
-  }
-
   @Query(() => User)
   user(@Ctx() ctx: ApolloContext, @Args() findUniqueUserArgs?: FindUniqueUserArgs) {
-    // console.log('prisma', ctx.prisma)
     return ctx.prisma.user.findUnique(findUniqueUserArgs)
+  }
+
+  @Query(() => PaginedUser)
+  users(
+    @Ctx() ctx: ApolloContext,
+    @Args() findManyUserArgs?: FindManyUserArgs,
+    @Args() paginationArgs?: PaginationArgs
+  ) {
+    return prismaPagination<PrismaUser, Prisma.UserFindManyArgs>({
+      model: ctx.prisma.user,
+      args: findManyUserArgs,
+      options: paginationArgs,
+    })
   }
 
   @FieldResolver(() => [Post], {
@@ -47,23 +42,6 @@ export class UserResolver {
     @Args() userPostArgs: UserPostArgs = {}
   ) {
     return ctx.prisma.user.findUnique({ where: { id: user.id } }).Post(userPostArgs)
-  }
-
-  @Query(() => Pagination<User>)
-  userCount(
-    @Ctx() ctx: ApolloContext,
-    @Args() findManyUserArgs?: FindManyUserArgs
-  ): GetPaginedDocsParans<User> {
-    // const skip =findManyUserArgs.skip
-    // const take =findManyUserArgs.take
-    // getPaginedDocs({perPage:take,totalDocs:skip,currentPage:4,docs:[]})
-    // return ctx.prisma.user.count(findManyUserArgs)
-    return {
-      docs: [],
-      currentPage: 4,
-      perPage: 4,
-      totalDocs: 4,
-    }
   }
 
   @Mutation(() => User)

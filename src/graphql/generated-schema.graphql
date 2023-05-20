@@ -46,7 +46,7 @@ input EnumStatusFilter {
 }
 
 type Mutation {
-  updatePost(postUpdateInput: PostUpdateInput!, postWhereUniqueInput: PostWhereUniqueInput!): Post!
+  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
 }
 
@@ -100,11 +100,24 @@ input NestedUuidFilter {
   notIn: [String!]
 }
 
-type Pagination {
+type PaginedPost {
   currentPage: Float!
-  docs: [String!]!
+  docs: [Post!]!
+  lastPage: Float!
+  next: Float
   perPage: Float!
-  totalDocs: Float!
+  prev: Float
+  total: Float!
+}
+
+type PaginedUser {
+  currentPage: Float!
+  docs: [User!]!
+  lastPage: Float!
+  next: Float
+  perPage: Float!
+  prev: Float
+  total: Float!
 }
 
 type Post {
@@ -247,11 +260,9 @@ input PostWhereUniqueInput {
 }
 
 type Query {
-  post(where: PostWhereUniqueInput!): Post!
-  posts(cursor: PostWhereUniqueInput, distinct: [PostScalarFieldEnum!], orderBy: [PostOrderByWithRelationInput!], skip: Int, take: Int, where: PostWhereInput): [Post!]!
+  posts(currentPage: Float, cursor: PostWhereUniqueInput, distinct: [PostScalarFieldEnum!], orderBy: [PostOrderByWithRelationInput!], perPage: Float, skip: Int, take: Int, where: PostWhereInput): PaginedPost!
   user(where: UserWhereUniqueInput!): User!
-  userCount(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): Pagination!
-  users(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
+  users(currentPage: Float, cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], perPage: Float, skip: Int, take: Int, where: UserWhereInput): PaginedUser!
 }
 
 enum QueryMode {
