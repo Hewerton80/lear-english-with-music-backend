@@ -260,9 +260,9 @@ input PostWhereUniqueInput {
 }
 
 type Query {
-  posts(currentPage: Float, cursor: PostWhereUniqueInput, distinct: [PostScalarFieldEnum!], orderBy: [PostOrderByWithRelationInput!], perPage: Float, skip: Int, take: Int, where: PostWhereInput): PaginedPost!
+  posts(currentPage: Float, orderBy: PostOrderByWithRelationInput!, perPage: Float, where: PostWhereInput!): PaginedPost!
   user(where: UserWhereUniqueInput!): User!
-  users(currentPage: Float, cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], perPage: Float, skip: Int, take: Int, where: UserWhereInput): PaginedUser!
+  users(currentPage: Float, orderBy: UserOrderByWithRelationInput!, perPage: Float, where: UserWhereInput!): PaginedUser!
 }
 
 enum QueryMode {
@@ -348,15 +348,6 @@ input UserOrderByWithRelationInput {
 input UserRelationFilter {
   is: UserWhereInput
   isNot: UserWhereInput
-}
-
-enum UserScalarFieldEnum {
-  createdAt
-  email
-  id
-  name
-  password
-  role
 }
 
 input UserUpdateInput {

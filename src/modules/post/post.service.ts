@@ -1,29 +1,44 @@
-import { prismaClient } from '../../prisma/client'
+import { Inject, Service } from 'typedi'
 import {
-  FindManyPostArgs,
   FindUniquePostArgs,
-  PostUpdateInput,
-  PostWhereUniqueInput,
+  PostOrderByWithRelationInput,
+  PostWhereInput,
+  UpdateOnePostArgs,
 } from '../../prisma/generated/type-graphql'
-import { Service } from 'typedi'
+import { PaginationArgs } from '../../common/args/pagination.args'
+import { prismaPagination } from '../../helpers/getPrismaPagination'
+import { Post as PrismaPost, Prisma } from '@prisma/client'
 
 @Service()
 export class PostService {
-  findMany(findManyPostArgs?: FindManyPostArgs) {
-    return prismaClient.post.findMany(findManyPostArgs)
+  constructor(@Inject('context') private readonly ctx: ApolloContext) {}
+
+  findMany({
+    paginationArgs,
+    orderBy,
+    where,
+  }: {
+    paginationArgs?: PaginationArgs
+    orderBy?: PostOrderByWithRelationInput
+    where?: PostWhereInput
+  }) {
+    return prismaPagination<
+      PrismaPost,
+      Prisma.PostWhereInput,
+      Prisma.PostOrderByWithRelationInput
+    >({
+      model: this.ctx.prisma.post,
+      where,
+      orderBy,
+      paginationArgs,
+    })
   }
 
   findOne(findUniquePostArgs?: FindUniquePostArgs) {
-    return prismaClient.post.findUnique(findUniquePostArgs)
-  }
-  count(findManyPostsArgs?: FindManyPostArgs) {
-    return prismaClient.post.count(findManyPostsArgs)
+    return this.ctx.prisma.post.findUnique(findUniquePostArgs)
   }
 
-  update(postWhereUniqueInput: PostWhereUniqueInput, postUpdateInput: PostUpdateInput) {
-    return prismaClient.post.update({
-      where: postWhereUniqueInput,
-      data: postUpdateInput,
-    })
+  update(updateOnePostArgs: UpdateOnePostArgs) {
+    return this.ctx.prisma.post.update(updateOnePostArgs)
   }
 }

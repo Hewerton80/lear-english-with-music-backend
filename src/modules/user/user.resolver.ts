@@ -1,51 +1,44 @@
-import { Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql'
+import { Arg, Args, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql'
 import {
-  FindManyUserArgs,
   FindUniqueUserArgs,
+  UserOrderByWithRelationInput,
+  UserWhereInput,
   User,
   UpdateOneUserArgs,
   UserPostArgs,
   Post,
 } from '../../prisma/generated/type-graphql'
 import { Service } from 'typedi'
-import { prismaPagination } from '../../helpers/getPrismaPagination'
-import { User as PrismaUser, Prisma } from '@prisma/client'
 import { PaginedUser } from './user.model'
 import { PaginationArgs } from '../../common/args/pagination.args'
+import { UserService } from './user.service'
+
 @Service()
 @Resolver(User)
 export class UserResolver {
+  constructor(private readonly userService: UserService) {}
+
   @Query(() => User)
-  user(@Ctx() ctx: ApolloContext, @Args() findUniqueUserArgs?: FindUniqueUserArgs) {
-    return ctx.prisma.user.findUnique(findUniqueUserArgs)
+  user(@Args() findUniqueUserArgs?: FindUniqueUserArgs) {
+    return this.userService.findOne(findUniqueUserArgs)
   }
 
   @Query(() => PaginedUser)
   users(
-    @Ctx() ctx: ApolloContext,
-    @Args() findManyUserArgs?: FindManyUserArgs,
-    @Args() paginationArgs?: PaginationArgs
+    @Args() paginationArgs?: PaginationArgs,
+    @Arg('orderBy') orderBy?: UserOrderByWithRelationInput,
+    @Arg('where') where?: UserWhereInput
   ) {
-    return prismaPagination<PrismaUser, Prisma.UserFindManyArgs>({
-      model: ctx.prisma.user,
-      args: findManyUserArgs,
-      options: paginationArgs,
-    })
+    return this.userService.findMany({ paginationArgs, orderBy, where })
   }
 
-  @FieldResolver(() => [Post], {
-    nullable: false,
-  })
-  posts(
-    @Ctx() ctx: ApolloContext,
-    @Root() user: User,
-    @Args() userPostArgs: UserPostArgs = {}
-  ) {
-    return ctx.prisma.user.findUnique({ where: { id: user.id } }).Post(userPostArgs)
+  @FieldResolver(() => [Post], { nullable: false })
+  posts(@Root() user: User, @Args() userPostArgs?: UserPostArgs) {
+    return this.userService.findPostsByUserId({ userId: user.id, userPostArgs })
   }
 
   @Mutation(() => User)
-  updateUser(@Ctx() ctx: ApolloContext, @Args() updateOneUserArgs: UpdateOneUserArgs) {
-    return ctx.prisma.user.update(updateOneUserArgs)
+  updateUser(@Args() updateOneUserArgs: UpdateOneUserArgs) {
+    return this.userService.update(updateOneUserArgs)
   }
 }

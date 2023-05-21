@@ -1,31 +1,55 @@
-import { Service } from 'typedi'
-import { prismaClient } from '../../prisma/client'
-
+import { Inject, Service } from 'typedi'
 import {
-  UserWhereUniqueInput,
-  FindManyUserArgs,
   FindUniqueUserArgs,
-  UserUpdateInput,
+  UserOrderByWithRelationInput,
+  UserWhereInput,
+  UpdateOneUserArgs,
+  UserPostArgs,
 } from '../../prisma/generated/type-graphql'
+import { PaginationArgs } from '../../common/args/pagination.args'
+import { prismaPagination } from '../../helpers/getPrismaPagination'
+import { User as PrismaUser, Prisma } from '@prisma/client'
 
 @Service()
 export class UserService {
-  findMany(findManyUserArgs?: FindManyUserArgs) {
-    return prismaClient.user.findMany(findManyUserArgs)
+  constructor(@Inject('context') private readonly ctx: ApolloContext) {}
+
+  findMany({
+    paginationArgs,
+    orderBy,
+    where,
+  }: {
+    paginationArgs?: PaginationArgs
+    orderBy?: UserOrderByWithRelationInput
+    where?: UserWhereInput
+  }) {
+    return prismaPagination<
+      PrismaUser,
+      Prisma.UserWhereInput,
+      Prisma.UserOrderByWithRelationInput
+    >({
+      model: this.ctx.prisma.user,
+      where,
+      orderBy,
+      paginationArgs,
+    })
   }
 
   findOne(findUniqueUserArgs?: FindUniqueUserArgs) {
-    return prismaClient.user.findUnique(findUniqueUserArgs)
+    return this.ctx.prisma.user.findUnique(findUniqueUserArgs)
   }
 
-  count(findManyUserArgs?: FindManyUserArgs) {
-    return prismaClient.user.count(findManyUserArgs)
+  findPostsByUserId({
+    userId,
+    userPostArgs,
+  }: {
+    userId: string
+    userPostArgs?: UserPostArgs
+  }) {
+    return this.ctx.prisma.user.findUnique({ where: { id: userId } }).Post(userPostArgs)
   }
 
-  update(userWhereUniqueInput: UserWhereUniqueInput, userUpdateInput: UserUpdateInput) {
-    return prismaClient.user.update({
-      where: userWhereUniqueInput,
-      data: userUpdateInput,
-    })
+  update(updateOneUserArgs: UpdateOneUserArgs) {
+    return this.ctx.prisma.user.update(updateOneUserArgs)
   }
 }
