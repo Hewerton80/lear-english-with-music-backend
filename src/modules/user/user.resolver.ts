@@ -1,4 +1,13 @@
-import { Arg, Args, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql'
+import {
+  Arg,
+  Args,
+  Authorized,
+  FieldResolver,
+  Mutation,
+  Query,
+  Resolver,
+  Root,
+} from 'type-graphql'
 import {
   FindUniqueUserArgs,
   UserOrderByWithRelationInput,
@@ -23,6 +32,7 @@ export class UserResolver {
     return this.userService.findOne(findUniqueUserArgs)
   }
 
+  @Authorized()
   @Query(() => PaginedUser)
   users(
     @Args() paginationArgs?: PaginationArgs,

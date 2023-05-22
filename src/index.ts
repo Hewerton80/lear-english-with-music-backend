@@ -7,6 +7,7 @@ import { resolve } from 'path'
 import { prismaClient } from './prisma/client'
 import { Container } from 'typedi'
 import { resolvers } from './modules'
+import { AuthChecker } from './common/resolvers/Auth.checker'
 // import { resolvers } from './prisma/generated/type-graphql'
 dotenv.config()
 
@@ -18,6 +19,7 @@ async function bootstrap() {
     emitSchemaFile: resolve(__dirname, './graphql/generated-schema.graphql'),
     validate: false,
     container: ({ context }: ResolverData<ApolloContext>) => context.container,
+    authChecker: AuthChecker,
   })
 
   const server = new ApolloServer<ApolloContext>({
