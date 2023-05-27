@@ -25,9 +25,7 @@ async function main() {
     createdAt: faker.date.past(),
   }))
 
-  await prismaClient.user.createMany({
-    data: usersData,
-  })
+  await prismaClient.user.createMany({ data: usersData })
 
   const usersIdArray = usersData.map(({ id }) => id)
   const postsData: PostCreateManyInput[] = getRange(1000).map(() => ({

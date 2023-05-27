@@ -9,7 +9,7 @@ import {
 } from '../../prisma/generated/type-graphql'
 import { Service } from 'typedi'
 import { PaginedPost } from './post.model'
-import { PaginationArgs } from '../../common/args/pagination.args'
+import { PaginationInput } from '../../common/inputs/pagination.inputs'
 import { UserService } from '../user/user.service'
 import { PostService } from './post.service'
 
@@ -21,15 +21,16 @@ export class PostResolver {
     private readonly userService: UserService
   ) {}
 
-  post(@Args() findUniquePostArgs?: FindUniquePostArgs) {
+  @Query(() => Post)
+  post(@Args() findUniquePostArgs: FindUniquePostArgs) {
     return this.postService.findOne(findUniquePostArgs)
   }
 
   @Query(() => PaginedPost)
   posts(
-    @Args() paginationArgs?: PaginationArgs,
-    @Arg('orderBy') orderBy?: PostOrderByWithRelationInput,
-    @Arg('where') where?: PostWhereInput
+    @Arg('paginationInput') paginationArgs?: PaginationInput,
+    @Arg('orderBy', { nullable: true }) orderBy?: PostOrderByWithRelationInput,
+    @Arg('where', { nullable: true }) where?: PostWhereInput
   ) {
     return this.postService.findMany({ paginationArgs, orderBy, where })
   }
