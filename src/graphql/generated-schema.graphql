@@ -100,6 +100,11 @@ input NestedUuidFilter {
   notIn: [String!]
 }
 
+input PaginationInput {
+  currentPage: Float = 1
+  perPage: Float = 25
+}
+
 type PaginedPost {
   currentPage: Float!
   docs: [Post!]!
@@ -260,9 +265,10 @@ input PostWhereUniqueInput {
 }
 
 type Query {
-  posts(currentPage: Float, orderBy: PostOrderByWithRelationInput!, perPage: Float, where: PostWhereInput!): PaginedPost!
+  post(where: PostWhereUniqueInput!): Post!
+  posts(orderBy: PostOrderByWithRelationInput, paginationInput: PaginationInput!, where: PostWhereInput): PaginedPost!
   user(where: UserWhereUniqueInput!): User!
-  users(currentPage: Float, orderBy: UserOrderByWithRelationInput!, perPage: Float, where: UserWhereInput!): PaginedUser!
+  users(orderBy: UserOrderByWithRelationInput, paginationInput: PaginationInput!, where: UserWhereInput): PaginedUser!
 }
 
 enum QueryMode {

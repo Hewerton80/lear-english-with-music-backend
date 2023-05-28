@@ -5,7 +5,7 @@ import {
   PostWhereInput,
   UpdateOnePostArgs,
 } from '../../prisma/generated/type-graphql'
-import { PaginationArgs } from '../../common/args/pagination.args'
+import { PaginationInput } from '../../common/inputs/pagination.inputs'
 import { prismaPagination } from '../../helpers/getPrismaPagination'
 import { Post as PrismaPost, Prisma } from '@prisma/client'
 
@@ -18,7 +18,7 @@ export class PostService {
     orderBy,
     where,
   }: {
-    paginationArgs?: PaginationArgs
+    paginationArgs?: PaginationInput
     orderBy?: PostOrderByWithRelationInput
     where?: PostWhereInput
   }) {

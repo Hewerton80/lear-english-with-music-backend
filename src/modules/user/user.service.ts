@@ -6,7 +6,7 @@ import {
   UpdateOneUserArgs,
   UserPostArgs,
 } from '../../prisma/generated/type-graphql'
-import { PaginationArgs } from '../../common/args/pagination.args'
+import { PaginationInput } from '../../common/inputs/pagination.inputs'
 import { prismaPagination } from '../../helpers/getPrismaPagination'
 import { User as PrismaUser, Prisma } from '@prisma/client'
 
@@ -19,7 +19,7 @@ export class UserService {
     orderBy,
     where,
   }: {
-    paginationArgs?: PaginationArgs
+    paginationArgs?: PaginationInput
     orderBy?: UserOrderByWithRelationInput
     where?: UserWhereInput
   }) {
