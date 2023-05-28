@@ -4,11 +4,12 @@ import { buildSchema, ResolverData } from 'type-graphql'
 import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
 import { resolve } from 'path'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, Role } from '@prisma/client'
 import { Container } from 'typedi'
 import { resolvers } from './modules'
-import { AuthChecker } from './common/resolvers/Auth.checker'
-import { apolloFormatError, ValidationError, myFormatError } from './utis/errors'
+import { AuthChecker } from './common/resolvers/auth.checker'
+import { apolloFormatError } from './utils/errors'
+import { getApolloContext } from './utils/getApolloContext'
 // import { resolvers } from './prisma/generated/type-graphql'
 dotenv.config()
 
@@ -25,7 +26,7 @@ async function bootstrap() {
 
   const server = new ApolloServer<ApolloContext>({
     schema,
-    formatError: myFormatError,
+    formatError: apolloFormatError,
     includeStacktraceInErrorResponses: false,
 
     plugins: [
@@ -42,13 +43,7 @@ async function bootstrap() {
 
   const PORT = process.env.PORT || 3001
   const { url } = await startStandaloneServer(server, {
-    context: async (): Promise<ApolloContext> => {
-      const requestId = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER) // uuid-like
-      const container = Container.of(requestId.toString()) // get scoped container
-      const context: ApolloContext = { requestId, container, prisma: prismaClient } // create our context
-      container.set('context', context) // place context or other data in container
-      return context
-    },
+    context: getApolloContext(prismaClient),
 
     listen: { port: Number(PORT) },
   })

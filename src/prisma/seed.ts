@@ -7,10 +7,10 @@ import {
   PostCreateManyInput,
   Status,
 } from './generated/type-graphql'
-import { getRange } from '../utis/getRange'
-import { getRandomIntInclusive } from '../utis/getRandomIntInclusive'
+import { getRange } from '../utils/getRange'
+import { getRandomIntInclusive } from '../utils/getRandomIntInclusive'
 import { hash } from 'bcrypt'
-import { getRamdomKeyFromAObject } from '../utis/getRamdomKeyFromAObject'
+import { getRamdomKeyFromAObject } from '../utils/getRamdomKeyFromAObject'
 
 const prismaClient = new PrismaClient()
 async function main() {

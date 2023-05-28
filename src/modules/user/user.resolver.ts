@@ -21,7 +21,7 @@ import { Service } from 'typedi'
 import { PaginedUser } from './user.model'
 import { PaginationInput } from '../../common/inputs/pagination.inputs'
 import { UserService } from './user.service'
-import { GraphQLError } from 'graphql'
+import { Role } from '@prisma/client'
 
 @Service()
 @Resolver(User)
@@ -33,18 +33,13 @@ export class UserResolver {
     return this.userService.findOne(findUniqueUserArgs)
   }
 
-  @Authorized()
+  @Authorized(Role.ADMIN)
   @Query(() => PaginedUser)
   users(
     @Arg('paginationInput') paginationArgs: PaginationInput,
     @Arg('orderBy', { nullable: true }) orderBy?: UserOrderByWithRelationInput,
     @Arg('where', { nullable: true }) where?: UserWhereInput
   ) {
-    throw new GraphQLError('You are not authorized to perform this action.', {
-      extensions: {
-        code: 'FORBIDDEN',
-      },
-    })
     return this.userService.findMany({ paginationArgs, orderBy, where })
   }
 
