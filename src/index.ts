@@ -4,12 +4,13 @@ import { buildSchema, ResolverData } from 'type-graphql'
 import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
 import { resolve } from 'path'
-import { PrismaClient, Role } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import { Container } from 'typedi'
 import { resolvers } from './modules'
 import { AuthChecker } from './common/resolvers/auth.checker'
 import { apolloFormatError } from './utils/errors'
 import { getApolloContext } from './utils/getApolloContext'
+
 // import { resolvers } from './prisma/generated/type-graphql'
 dotenv.config()
 
@@ -22,12 +23,19 @@ async function bootstrap() {
     emitSchemaFile: resolve(__dirname, './graphql/generated-schema.graphql'),
     container: ({ context }: ResolverData<ApolloContext>) => context.container,
     authChecker: AuthChecker,
+    validate: { forbidUnknownValues: false },
+    // validate: false,
+    // validate: (argValue, argType) => {
+    //   console.log('argValue', argValue)
+    //   console.log('argType', argType)
+    //   // return
+    // },
   })
 
   const server = new ApolloServer<ApolloContext>({
     schema,
     formatError: apolloFormatError,
-    includeStacktraceInErrorResponses: false,
+    // includeStacktraceInErrorResponses: false,
 
     plugins: [
       {
@@ -43,6 +51,7 @@ async function bootstrap() {
 
   const PORT = process.env.PORT || 3001
   const { url } = await startStandaloneServer(server, {
+    // context: getApolloContext(prismaClient),
     context: getApolloContext(prismaClient),
 
     listen: { port: Number(PORT) },

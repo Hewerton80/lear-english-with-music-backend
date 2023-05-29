@@ -13,7 +13,7 @@ export class AuthChecker implements AuthCheckerInterface<ApolloContext> {
   ) {}
 
   async check({}: ResolverData<ApolloContext>, roles: Role[] = []) {
-    console.log('roles', roles)
+    // console.log('roles', roles)
     if (!roles.length) {
       throw new Error(`some Role must be required in 'Authorized' decorator`)
     }

@@ -46,6 +46,7 @@ input EnumStatusFilter {
 }
 
 type Mutation {
+  login(email: String!, password: String!): String!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
 }

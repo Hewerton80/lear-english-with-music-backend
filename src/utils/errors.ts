@@ -39,11 +39,10 @@ export class ValidationError extends GraphQLError {
 
 export function apolloFormatError(formattedError: GraphQLFormattedError, error: unknown) {
   const originalError = unwrapResolverError(error)
-  // Validation
   if (originalError instanceof ArgumentValidationError) {
     return new ValidationError(originalError?.validationErrors)
   }
-
+  // an unknown value was passed to the validate function
   // Generic
   return formattedError
 }
