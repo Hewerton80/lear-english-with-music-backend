@@ -23,7 +23,6 @@ export class UserService {
     orderBy?: UserOrderByWithRelationInput
     where?: UserWhereInput
   }) {
-    console.log('loggedUser', this.ctx.loggedUser)
     return prismaPagination<
       PrismaUser,
       Prisma.UserWhereInput,
