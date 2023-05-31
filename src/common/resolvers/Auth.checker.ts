@@ -45,10 +45,6 @@ export class AuthChecker implements AuthCheckerInterface<ApolloContext> {
   }
 
   async check({}: ResolverData<ApolloContext>, roles: Role[] = []) {
-    // console.log('roles', roles)
-    // if (!roles.length) {
-    //   throw new Error(`some Role must be required in 'Authorized' decorator`)
-    // }
     const someRoleNotExist = roles.some((role) => !getKeyByValue(Role, role))
     if (someRoleNotExist) {
       throw new GraphQLError(
@@ -59,12 +55,16 @@ export class AuthChecker implements AuthCheckerInterface<ApolloContext> {
     const token =
       this.checkAuthorizationHeaderFormattingAndReturnToken(headerAuthorization)
 
-    // const token = jwt.sign({ payload }, process.env.TOKEN_SECRET)
     let decoded: { payload: JwdDto } | undefined = undefined
     try {
       decoded = jwt.verify(token, process.env.TOKEN_SECRET) as { payload: JwdDto }
     } catch (err) {
       throw new GraphQLError('token not provided', {
+        extensions: { code: HttpStatusCode.UNAUTHORIZED },
+      })
+    }
+    if (roles.length > 0 && !roles.includes(decoded?.payload?.role)) {
+      throw new GraphQLError('Usuário sem permissão de acesso', {
         extensions: { code: HttpStatusCode.UNAUTHORIZED },
       })
     }
