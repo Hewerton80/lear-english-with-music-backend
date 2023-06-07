@@ -1,2 +1,3 @@
-export { PostCrudResolver } from "./Post/PostCrudResolver";
-export { UserCrudResolver } from "./User/UserCrudResolver";
+export { AuthorCrudResolver } from "./Author/AuthorCrudResolver";
+export { SongCrudResolver } from "./Song/SongCrudResolver";
+export { SongAuthorCrudResolver } from "./SongAuthor/SongAuthorCrudResolver";

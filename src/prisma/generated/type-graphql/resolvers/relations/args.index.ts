@@ -1,1 +1,2 @@
-export * from "./User/args";
+export * from "./Author/args";
+export * from "./Song/args";

@@ -1,2 +1,3 @@
-export { Post } from "./Post";
-export { User } from "./User";
+export { Author } from "./Author";
+export { Song } from "./Song";
+export { SongAuthor } from "./SongAuthor";

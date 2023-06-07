@@ -1,6 +1,5 @@
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["postgresqlExtensions"]
+    provider = "prisma-client-js"
 }
 
 generator typegraphql {
@@ -9,41 +8,32 @@ generator typegraphql {
 }
 
 datasource db {
-    provider = "postgresql"
+    provider = "mysql"
     url      = env("DATABASE_URL")
 }
 
-model User {
-    id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-    email     String   @unique
+model Song {
+    id        String       @id @default(cuid())
+    title     String
+    slug      String       @unique
+    authors   SongAuthor[]
+    createdAt DateTime     @default(now())
+}
+
+model Author {
+    id        String       @id @default(cuid())
     name      String
-    role      Role     @default(CUSTOMER)
-    password  String
+    slug      String       @unique
+    songs     SongAuthor[]
+    createdAt DateTime     @default(now())
+}
+
+model SongAuthor {
+    authorId  String
+    author    Author   @relation(fields: [authorId], references: [id])
+    songId    String
+    song      Song     @relation(fields: [songId], references: [id])
     createdAt DateTime @default(now())
-    Post      Post[]
 
-    @@map("users")
-}
-
-model Post {
-    id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-    title    String
-    content  String
-    status   Status
-    authorId String @db.Uuid
-    author   User?  @relation(fields: [authorId], references: [id])
-
-    @@map("posts")
-}
-
-enum Status {
-    DRAFT
-    INREVISION
-    PUBLISHED
-    UNPUBLISHED
-}
-
-enum Role {
-    CUSTOMER
-    ADMIN
+    @@id([songId, authorId])
 }

@@ -7,7 +7,6 @@ import { resolve } from 'path'
 import { PrismaClient } from '@prisma/client'
 import { Container } from 'typedi'
 import { resolvers } from './modules'
-import { AuthChecker } from './common/resolvers/auth.checker'
 import { apolloFormatError } from './utils/errors'
 import { getApolloContext } from './utils/getApolloContext'
 
@@ -22,7 +21,6 @@ async function bootstrap() {
     resolvers,
     emitSchemaFile: resolve(__dirname, './graphql/generated-schema.graphql'),
     container: ({ context }: ResolverData<ApolloContext>) => context.container,
-    authChecker: AuthChecker,
     validate: { forbidUnknownValues: false },
     // validate: false,
     // validate: (argValue, argType) => {

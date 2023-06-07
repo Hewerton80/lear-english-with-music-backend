@@ -1,0 +1,14 @@
+export { AggregateSongAuthorArgs } from "./AggregateSongAuthorArgs";
+export { CreateManySongAuthorArgs } from "./CreateManySongAuthorArgs";
+export { CreateOneSongAuthorArgs } from "./CreateOneSongAuthorArgs";
+export { DeleteManySongAuthorArgs } from "./DeleteManySongAuthorArgs";
+export { DeleteOneSongAuthorArgs } from "./DeleteOneSongAuthorArgs";
+export { FindFirstSongAuthorArgs } from "./FindFirstSongAuthorArgs";
+export { FindFirstSongAuthorOrThrowArgs } from "./FindFirstSongAuthorOrThrowArgs";
+export { FindManySongAuthorArgs } from "./FindManySongAuthorArgs";
+export { FindUniqueSongAuthorArgs } from "./FindUniqueSongAuthorArgs";
+export { FindUniqueSongAuthorOrThrowArgs } from "./FindUniqueSongAuthorOrThrowArgs";
+export { GroupBySongAuthorArgs } from "./GroupBySongAuthorArgs";
+export { UpdateManySongAuthorArgs } from "./UpdateManySongAuthorArgs";
+export { UpdateOneSongAuthorArgs } from "./UpdateOneSongAuthorArgs";
+export { UpsertOneSongAuthorArgs } from "./UpsertOneSongAuthorArgs";
