@@ -17,11 +17,6 @@ export class AuthorCreateWithoutSongsInput {
   })
   name!: string;
 
-  @TypeGraphQL.Field(_type => String, {
-    nullable: false
-  })
-  slug!: string;
-
   @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })

@@ -2,33 +2,31 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
-import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
 import { SongAuthorUpdateManyWithoutSongNestedInput } from "../inputs/SongAuthorUpdateManyWithoutSongNestedInput";
-import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
 
 @TypeGraphQL.InputType("SongUpdateInput", {
   isAbstract: true
 })
 export class SongUpdateInput {
-  @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
+  @TypeGraphQL.Field(_type => String, {
     nullable: true
   })
-  id?: StringFieldUpdateOperationsInput | undefined;
+  id?: string | undefined;
 
-  @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
+  @TypeGraphQL.Field(_type => String, {
     nullable: true
   })
-  title?: StringFieldUpdateOperationsInput | undefined;
+  title?: string | undefined;
 
-  @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
+  @TypeGraphQL.Field(_type => String, {
     nullable: true
   })
-  slug?: StringFieldUpdateOperationsInput | undefined;
+  url?: string | undefined;
 
-  @TypeGraphQL.Field(_type => DateTimeFieldUpdateOperationsInput, {
+  @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })
-  createdAt?: DateTimeFieldUpdateOperationsInput | undefined;
+  createdAt?: Date | undefined;
 
   @TypeGraphQL.Field(_type => SongAuthorUpdateManyWithoutSongNestedInput, {
     nullable: true

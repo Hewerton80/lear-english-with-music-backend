@@ -4,6 +4,7 @@ export enum SongScalarFieldEnum {
   id = "id",
   title = "title",
   slug = "slug",
+  url = "url",
   createdAt = "createdAt"
 }
 TypeGraphQL.registerEnumType(SongScalarFieldEnum, {

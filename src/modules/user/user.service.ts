@@ -15,11 +15,11 @@
 //   constructor(@Inject('context') private readonly ctx: ApolloContext) {}
 
 //   findMany({
-//     paginationArgs,
+//     paginationInput,
 //     orderBy,
 //     where,
 //   }: {
-//     paginationArgs?: PaginationInput
+//     paginationInput?: PaginationInput
 //     orderBy?: UserOrderByWithRelationInput
 //     where?: UserWhereInput
 //   }) {
@@ -31,7 +31,7 @@
 //       model: this.ctx.prisma.user,
 //       where,
 //       orderBy,
-//       paginationArgs,
+//       paginationInput,
 //     })
 //   }
 

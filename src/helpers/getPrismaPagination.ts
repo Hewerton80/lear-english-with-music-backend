@@ -17,17 +17,17 @@ interface IPaginateFunctionArgs<WhereInput, OrderInput> {
   model: any
   where?: WhereInput
   orderBy?: OrderInput
-  paginationArgs?: IPaginateArgs
+  paginationInput?: IPaginateArgs
 }
 
 export const prismaPagination = async <DocsType, WhereInput, OrderInput>({
   model,
   where,
   orderBy,
-  paginationArgs,
+  paginationInput,
 }: IPaginateFunctionArgs<WhereInput, OrderInput>) => {
-  const currentPage = Number(paginationArgs?.currentPage) || 1
-  const perPage = Number(paginationArgs?.perPage) || 25
+  const currentPage = Number(paginationInput?.currentPage) || 1
+  const perPage = Number(paginationInput?.perPage) || 25
 
   const skip = currentPage > 0 ? perPage * (currentPage - 1) : 0
   const totalPromise = model.count({ where })

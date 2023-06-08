@@ -36,11 +36,11 @@
 //   @Authorized(Role.ADMIN)
 //   @Query(() => PaginedUser)
 //   users(
-//     @Arg('paginationInput') paginationArgs: PaginationInput,
+//     @Arg('paginationInput') paginationInput: PaginationInput,
 //     @Arg('orderBy', { nullable: true }) orderBy?: UserOrderByWithRelationInput,
 //     @Arg('where', { nullable: true }) where?: UserWhereInput
 //   ) {
-//     return this.userService.findMany({ paginationArgs, orderBy, where })
+//     return this.userService.findMany({ paginationInput, orderBy, where })
 //   }
 
 //   @FieldResolver(() => [Post], { nullable: false })

@@ -20,7 +20,7 @@ export class SongCreateManyInput {
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
-  slug!: string;
+  url!: string;
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: true

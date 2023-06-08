@@ -15,5 +15,10 @@ export class SongWhereUniqueInput {
   @TypeGraphQL.Field(_type => String, {
     nullable: true
   })
+  title?: string | undefined;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
   slug?: string | undefined;
 }

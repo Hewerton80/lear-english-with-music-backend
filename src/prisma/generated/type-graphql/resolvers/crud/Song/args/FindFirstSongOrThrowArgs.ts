@@ -35,5 +35,5 @@ export class FindFirstSongOrThrowArgs {
   @TypeGraphQL.Field(_type => [SongScalarFieldEnum], {
     nullable: true
   })
-  distinct?: Array<"id" | "title" | "slug" | "createdAt"> | undefined;
+  distinct?: Array<"id" | "title" | "slug" | "url" | "createdAt"> | undefined;
 }

@@ -20,7 +20,7 @@ export class GroupBySongArgs {
   @TypeGraphQL.Field(_type => [SongScalarFieldEnum], {
     nullable: false
   })
-  by!: Array<"id" | "title" | "slug" | "createdAt">;
+  by!: Array<"id" | "title" | "slug" | "url" | "createdAt">;
 
   @TypeGraphQL.Field(_type => SongScalarWhereWithAggregatesInput, {
     nullable: true
