@@ -1,47 +1,68 @@
-// import 'reflect-metadata'
-// import { PrismaClient } from '@prisma/client'
-// import { faker } from '@faker-js/faker'
-// import {
-//   UserCreateManyInput,
-//   Role,
-//   PostCreateManyInput,
-//   Status,
-// } from './generated/type-graphql'
-// import { getRange } from '../utils/getRange'
-// import { getRandomIntInclusive } from '../utils/getRandomIntInclusive'
-// import { hash } from 'bcrypt'
-// import { getRamdomKeyFromAObject } from '../utils/getRamdomKeyFromAObject'
+import 'reflect-metadata'
+import { PrismaClient } from '@prisma/client'
+import { faker } from '@faker-js/faker'
+import { getRange } from '../utils/getRange'
+import { getRandomIntInclusive } from '../utils/getRandomIntInclusive'
+import { hash } from 'bcrypt'
+import { slugfy } from '../utils/slugfy'
 
-// const prismaClient = new PrismaClient()
-// async function main() {
-//   const password = await hash('Senha123', 10)
+const staticSongAuthors = [
+  'AC/DC',
+  'Adele',
+  'Arcade Fire',
+  'Beyoncé',
+  'Bruno Mars',
+  'Coldplay',
+  'Drake',
+  'Ed Sheeran',
+  'Eminem',
+  'Elvis Presley',
+  'Foo Fighters',
+  'Green Day',
+  "Guns N' Roses",
+  'Imagine Dragons',
+  'Jay-Z',
+  'Justin Bieber',
+  'Katy Perry',
+  'Kendrick Lamar',
+  'Lady Gaga',
+  'Led Zeppelin',
+  'Linkin Park',
+  'Madonna',
+  'Maroon 5',
+  'Metallica',
+  'Michael Jackson',
+  'Muse',
+  'Nirvana',
+  'Pink Floyd',
+  'Post Malone',
+  'Queen',
+  'Radiohead',
+  'Red Hot Chili Peppers',
+  'Rihanna',
+  'Taylor Swift',
+  'The Beatles',
+  'The Rolling Stones',
+  'The Weeknd',
+  'Twenty One Pilots',
+  'U2',
+]
 
-//   const usersData: UserCreateManyInput[] = getRange(500).map(() => ({
-//     id: faker.string.uuid(),
-//     email: faker.internet.email(),
-//     password,
-//     name: faker.internet.userName(),
-//     role: getRamdomKeyFromAObject(Role),
-//     createdAt: faker.date.past(),
-//   }))
-
-//   await prismaClient.user.createMany({ data: usersData })
-
-//   const usersIdArray = usersData.map(({ id }) => id)
-//   const postsData: PostCreateManyInput[] = getRange(1000).map(() => ({
-//     authorId: usersIdArray[getRandomIntInclusive(0, usersIdArray.length - 1)],
-//     content: faker.lorem.text(),
-//     status: getRamdomKeyFromAObject(Status),
-//     title: faker.lorem.text(),
-//   }))
-//   await prismaClient.post.createMany({ data: postsData })
-// }
-// main()
-//   .then(async () => {
-//     await prismaClient.$disconnect()
-//   })
-//   .catch(async (e) => {
-//     console.error(e)
-//     await prismaClient.$disconnect()
-//     process.exit(1)
-//   })
+const prismaClient = new PrismaClient()
+async function main() {
+  await prismaClient.author.createMany({
+    data: staticSongAuthors.map((name) => ({
+      name,
+      slug: slugfy(name),
+    })),
+  })
+}
+main()
+  .then(async () => {
+    await prismaClient.$disconnect()
+  })
+  .catch(async (e) => {
+    console.error(e)
+    await prismaClient.$disconnect()
+    process.exit(1)
+  })

@@ -3,6 +3,10 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input ArrayIds {
+  values: [String!]!
+}
+
 type Author {
   _count: AuthorCount
   createdAt: DateTime!
@@ -77,6 +81,7 @@ input DateTimeFilter {
 
 type Mutation {
   createAuthor(data: AuthorCreateInput!): Author!
+  createSong(authorIds: ArrayIds!, data: SongCreateWithoutAuthorsInput!): Song!
   updateAuthor(data: AuthorUpdateInput!, where: AuthorWhereUniqueInput!): Author!
 }
 
@@ -133,11 +138,13 @@ type PaginedSong {
 type Query {
   author(where: AuthorWhereUniqueInput!): Author!
   authors(input: PaginationInput!, orderBy: AuthorOrderByWithRelationInput, where: AuthorWhereInput): PaginedAuthor!
+  song(where: SongWhereUniqueInput!): Song!
   songs(orderBy: SongOrderByWithRelationInput, paginationInput: PaginationInput!, where: SongWhereInput): PaginedSong!
 }
 
 type Song {
   _count: SongCount
+  authors: [Author!]!
   createdAt: DateTime!
   id: String!
   slug: String!

@@ -5,6 +5,7 @@ import {
   AuthorWhereInput,
   AuthorCreateInput,
   Author,
+  FindManyAuthorArgs,
   AuthorUpdateInput,
   AuthorWhereUniqueInput,
 } from '../../prisma/generated/type-graphql'
@@ -51,10 +52,14 @@ export class AuthorService {
     })
   }
 
+  async count(authorWhereInput: AuthorWhereInput) {
+    return this.ctx.prisma.author.count({ where: authorWhereInput })
+  }
+
   async findOne(findUniqueAuthorArgs?: FindUniqueAuthorArgs) {
     const foundAuthor = await this.ctx.prisma.author.findUnique(findUniqueAuthorArgs)
     if (!foundAuthor) {
-      throw new GraphQLError('Author não encontrado', {
+      throw new GraphQLError('Autor não encontrado', {
         extensions: { code: HttpStatusCode.NOT_FOUND, staus: 404 },
       })
     }
