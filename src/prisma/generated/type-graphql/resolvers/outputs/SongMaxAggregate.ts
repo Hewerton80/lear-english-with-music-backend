@@ -27,6 +27,11 @@ export class SongMaxAggregate {
   })
   url!: string | null;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  lyric!: string | null;
+
   @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })

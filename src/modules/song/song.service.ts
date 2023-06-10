@@ -4,8 +4,12 @@ import {
   Song,
   SongCreateWithoutAuthorsInput,
   SongOrderByWithRelationInput,
+  SongUpdateWithoutAuthorsInput,
   SongWhereInput,
+  FindFirstAuthorArgs,
   UpdateOneSongArgs,
+  AuthorWhereInput,
+  SongWhereUniqueInput,
 } from '../../prisma/generated/type-graphql'
 import { PaginationInput } from '../../common/inputs/pagination.inputs'
 import { prismaPagination } from '../../helpers/getPrismaPagination'
@@ -22,11 +26,8 @@ export class SongService {
     private readonly authorService: AuthorService
   ) {}
 
-  private async checkIfNameOrSlugSongAlreadyExists({
-    title,
-    slug,
-  }: Pick<Song, 'title' | 'slug'>) {
-    if (await this.ctx.prisma.song.findFirst({ where: { OR: [{ title }, { slug }] } })) {
+  private async checkIfNameOrSlugSongAlreadyExists(songWhereInput: SongWhereInput) {
+    if (await this.ctx.prisma.song.findFirst({ where: songWhereInput })) {
       throw new GraphQLError('Já existe uma música com esse nome', {
         extensions: { code: HttpStatusCode.CONFLICT, staus: 409 },
       })
@@ -36,9 +37,12 @@ export class SongService {
   private async checkIfSomeAuthorNotExists(authorIds: string[]) {
     const countAuthors = await this.authorService.count({ id: { in: authorIds } })
     if (countAuthors !== authorIds.length) {
-      throw new GraphQLError('Algum author passado não existe contem valores repetidos', {
-        extensions: { code: HttpStatusCode.NOT_FOUND, staus: 404 },
-      })
+      throw new GraphQLError(
+        'Algum author passado não existe ou contem valores repetidos',
+        {
+          extensions: { code: HttpStatusCode.NOT_FOUND, staus: 404 },
+        }
+      )
     }
   }
 
@@ -63,33 +67,91 @@ export class SongService {
     })
   }
 
-  findOne(findUniqueSongArgs?: FindUniqueSongArgs) {
-    return this.ctx.prisma.song.findUnique(findUniqueSongArgs)
+  async findOne(findUniqueSongArgs?: FindUniqueSongArgs) {
+    const foundSong = await this.ctx.prisma.song.findUnique(findUniqueSongArgs)
+    if (!foundSong) {
+      throw new GraphQLError('Música não encontrada', {
+        extensions: { code: HttpStatusCode.NOT_FOUND, staus: 404 },
+      })
+    }
+    return foundSong
   }
 
-  async create(songCreateInput: SongCreateWithoutAuthorsInput, authorIds: string[]) {
-    const slug = slugfy(songCreateInput.title)
+  async create({
+    songCreateWithoutAuthorsInput,
+    authorIds,
+  }: {
+    songCreateWithoutAuthorsInput: SongCreateWithoutAuthorsInput
+    authorIds: string[]
+  }) {
+    const { title, url, ...restSongCreateWithoutAuthorsInput } =
+      songCreateWithoutAuthorsInput
+    const slug = slugfy(title)
     await this.checkIfSomeAuthorNotExists(authorIds)
     await this.checkIfNameOrSlugSongAlreadyExists({
-      title: songCreateInput.title,
-      slug,
+      OR: [{ title: { equals: title } }, { slug: { equals: slug } }],
     })
 
     return this.ctx.prisma.song.create({
       data: {
         slug,
-        title: songCreateInput.title,
-        url: songCreateInput.url,
-
+        title,
+        url,
         authors: {
           createMany: {
             data: authorIds.map((authorId) => ({ authorId })),
           },
         },
+        ...restSongCreateWithoutAuthorsInput,
       },
     })
   }
-  // update(updateOneSongArgs: UpdateOneSongArgs) {
-  //   return this.ctx.prisma.song.update(updateOneSongArgs)
-  // }
+
+  async update({
+    songUpdateWithoutAuthorsInput,
+    authorIds,
+    songWhereUniqueInput,
+  }: {
+    songUpdateWithoutAuthorsInput: SongUpdateWithoutAuthorsInput
+    authorIds: string[]
+    songWhereUniqueInput: SongWhereUniqueInput
+  }) {
+    await this.checkIfSomeAuthorNotExists(authorIds)
+
+    const foundSong = await this.findOne({ where: songWhereUniqueInput })
+
+    const data: SongUpdateWithoutAuthorsInput & { slug?: string } = {}
+
+    if (songUpdateWithoutAuthorsInput?.title) {
+      const slug = slugfy(songUpdateWithoutAuthorsInput.title)
+      await this.checkIfNameOrSlugSongAlreadyExists({
+        AND: [
+          {
+            OR: [
+              { title: { equals: songUpdateWithoutAuthorsInput.title } },
+              { slug: { equals: slug } },
+            ],
+          },
+          {
+            id: { not: { equals: foundSong.id } },
+          },
+        ],
+      })
+      data.title = songUpdateWithoutAuthorsInput.title
+      data.slug = slug
+    }
+
+    return this.ctx.prisma.song.update({
+      data: {
+        ...data,
+        authors: {
+          deleteMany: { songId: foundSong.id },
+          createMany: {
+            data: authorIds.map((authorId) => ({ authorId })),
+          },
+        },
+      },
+      where: songWhereUniqueInput,
+    })
+  }
 }

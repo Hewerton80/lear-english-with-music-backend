@@ -30,6 +30,11 @@ export class SongGroupBy {
   })
   url!: string;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  lyric!: string | null;
+
   @TypeGraphQL.Field(_type => Date, {
     nullable: false
   })

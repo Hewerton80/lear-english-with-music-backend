@@ -22,6 +22,11 @@ export class SongUpdateManyMutationInput {
   })
   url?: string | undefined;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  lyric?: string | undefined;
+
   @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })

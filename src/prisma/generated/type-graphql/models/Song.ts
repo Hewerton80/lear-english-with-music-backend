@@ -29,6 +29,11 @@ export class Song {
   })
   url!: string;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  lyric?: string | null;
+
   authors?: SongAuthor[];
 
   @TypeGraphQL.Field(_type => Date, {

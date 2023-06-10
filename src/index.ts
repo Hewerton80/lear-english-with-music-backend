@@ -22,12 +22,6 @@ async function bootstrap() {
     emitSchemaFile: resolve(__dirname, './graphql/generated-schema.graphql'),
     container: ({ context }: ResolverData<ApolloContext>) => context.container,
     validate: { forbidUnknownValues: false },
-    // validate: false,
-    // validate: (argValue, argType) => {
-    //   console.log('argValue', argValue)
-    //   console.log('argType', argType)
-    //   // return
-    // },
   })
 
   const server = new ApolloServer<ApolloContext>({

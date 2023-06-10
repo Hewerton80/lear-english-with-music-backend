@@ -83,6 +83,7 @@ type Mutation {
   createAuthor(data: AuthorCreateInput!): Author!
   createSong(authorIds: ArrayIds!, data: SongCreateWithoutAuthorsInput!): Song!
   updateAuthor(data: AuthorUpdateInput!, where: AuthorWhereUniqueInput!): Author!
+  updateSong(authorIds: ArrayIds!, data: SongUpdateWithoutAuthorsInput!, where: SongWhereUniqueInput!): Song!
 }
 
 input NestedDateTimeFilter {
@@ -106,6 +107,20 @@ input NestedStringFilter {
   lt: String
   lte: String
   not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
   notIn: [String!]
   startsWith: String
 }
@@ -147,6 +162,7 @@ type Song {
   authors: [Author!]!
   createdAt: DateTime!
   id: String!
+  lyric: String
   slug: String!
   title: String!
   url: String!
@@ -275,6 +291,7 @@ input SongCreateOrConnectWithoutAuthorsInput {
 input SongCreateWithoutAuthorsInput {
   createdAt: DateTime
   id: String
+  lyric: String
   title: String!
   url: String!
 }
@@ -283,6 +300,7 @@ input SongOrderByWithRelationInput {
   authors: SongAuthorOrderByRelationAggregateInput
   createdAt: SortOrder
   id: SortOrder
+  lyric: SortOrder
   slug: SortOrder
   title: SortOrder
   url: SortOrder
@@ -304,6 +322,7 @@ input SongUpdateOneRequiredWithoutAuthorsNestedInput {
 input SongUpdateWithoutAuthorsInput {
   createdAt: DateTime
   id: String
+  lyric: String
   title: String
   url: String
 }
@@ -320,6 +339,7 @@ input SongWhereInput {
   authors: SongAuthorListRelationFilter
   createdAt: DateTimeFilter
   id: StringFilter
+  lyric: StringNullableFilter
   slug: StringFilter
   title: StringFilter
   url: StringFilter
@@ -346,6 +366,20 @@ input StringFilter {
   lt: String
   lte: String
   not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
   notIn: [String!]
   startsWith: String
 }

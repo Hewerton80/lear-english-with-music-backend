@@ -14,8 +14,9 @@ import {
   Song,
   SongCreateWithoutAuthorsInput,
   SongOrderByWithRelationInput,
+  SongUpdateWithoutAuthorsInput,
   SongWhereInput,
-  SongAuthorsArgs,
+  SongWhereUniqueInput,
 } from '../../prisma/generated/type-graphql'
 import { Service } from 'typedi'
 import { PaginationInput } from '../../common/inputs/pagination.inputs'
@@ -43,32 +44,30 @@ export class SongResolver {
   }
 
   @FieldResolver(() => [Author])
-  async authors(
-    @Root() song: Song,
-    // @Args() songAuthorsArgs?: SongAuthorsArgs,
-    @Ctx() ctx: ApolloContext
-  ) {
-    const authors = await ctx.prisma.author.findMany({
+  authors(@Root() song: Song, @Ctx() ctx: ApolloContext) {
+    return ctx.prisma.author.findMany({
       where: { songs: { some: { songId: song.id } } },
     })
-    // const foundSong = await ctx.prisma.song.findFirst({
-    //   where: { id: song.id },
-    //   include: { authors: {} },
-    // })
-
-    // foundSong.
-    // const authors = await this.songService
-    //   .findOne({ where: { id: song.id } })
-    //   .authors({where:{}})
-
-    return authors
   }
 
   @Mutation(() => Song)
   createSong(
-    @Arg('data') songCreateInput: SongCreateWithoutAuthorsInput,
+    @Arg('data') songCreateWithoutAuthorsInput: SongCreateWithoutAuthorsInput,
     @Arg('authorIds') { values }: ArrayIds
   ) {
-    return this.songService.create(songCreateInput, values)
+    return this.songService.create({ songCreateWithoutAuthorsInput, authorIds: values })
+  }
+
+  @Mutation(() => Song)
+  updateSong(
+    @Arg('data') songUpdateWithoutAuthorsInput: SongUpdateWithoutAuthorsInput,
+    @Arg('where') songWhereUniqueInput: SongWhereUniqueInput,
+    @Arg('authorIds') { values }: ArrayIds
+  ) {
+    return this.songService.update({
+      songUpdateWithoutAuthorsInput,
+      songWhereUniqueInput,
+      authorIds: values,
+    })
   }
 }
