@@ -29,7 +29,7 @@ export class SongService {
   private async checkIfNameOrSlugSongAlreadyExists(songWhereInput: SongWhereInput) {
     if (await this.ctx.prisma.song.findFirst({ where: songWhereInput })) {
       throw new GraphQLError('Já existe uma música com esse nome', {
-        extensions: { code: HttpStatusCode.CONFLICT, staus: 409 },
+        extensions: { code: HttpStatusCode.CONFLICT, status: 409 },
       })
     }
   }
@@ -40,7 +40,7 @@ export class SongService {
       throw new GraphQLError(
         'Algum author passado não existe ou contem valores repetidos',
         {
-          extensions: { code: HttpStatusCode.NOT_FOUND, staus: 404 },
+          extensions: { code: HttpStatusCode.NOT_FOUND, status: 404 },
         }
       )
     }
@@ -71,7 +71,7 @@ export class SongService {
     const foundSong = await this.ctx.prisma.song.findUnique(findUniqueSongArgs)
     if (!foundSong) {
       throw new GraphQLError('Música não encontrada', {
-        extensions: { code: HttpStatusCode.NOT_FOUND, staus: 404 },
+        extensions: { code: HttpStatusCode.NOT_FOUND, status: 404 },
       })
     }
     return foundSong

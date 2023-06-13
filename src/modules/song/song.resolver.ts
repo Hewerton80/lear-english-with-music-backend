@@ -23,6 +23,7 @@ import { PaginationInput } from '../../common/inputs/pagination.inputs'
 import { SongService } from './song.service'
 import { PaginedSong } from './song.model'
 import { ArrayIds } from '../../common/inputs/array-ids.input'
+import './song.validations-enhace-map'
 
 @Service()
 @Resolver(Song)

@@ -26,7 +26,7 @@ export class AuthorService {
   }: Pick<Author, 'name' | 'slug'>) {
     if (await this.ctx.prisma.author.findFirst({ where: { OR: [{ name }, { slug }] } })) {
       throw new GraphQLError('Já existe um autor com esse nome', {
-        extensions: { code: HttpStatusCode.CONFLICT, staus: 409 },
+        extensions: { code: HttpStatusCode.CONFLICT, status: 409 },
       })
     }
   }
@@ -60,7 +60,7 @@ export class AuthorService {
     const foundAuthor = await this.ctx.prisma.author.findUnique(findUniqueAuthorArgs)
     if (!foundAuthor) {
       throw new GraphQLError('Autor não encontrado', {
-        extensions: { code: HttpStatusCode.NOT_FOUND, staus: 404 },
+        extensions: { code: HttpStatusCode.NOT_FOUND, status: 404 },
       })
     }
     return foundAuthor
