@@ -1,4 +1,4 @@
-import { MaxLength, ValidateNested, IsOptional } from 'class-validator'
+import { IsNotEmpty, MaxLength, ValidateNested } from 'class-validator'
 import {
   applyArgsTypesEnhanceMap,
   applyInputTypesEnhanceMap,
@@ -15,7 +15,10 @@ applyArgsTypesEnhanceMap({
 applyInputTypesEnhanceMap({
   AuthorCreateInput: {
     fields: {
-      name: [MaxLength(150, { message: 'Nome deve ter no máximo 150 caracteres' })],
+      name: [
+        MaxLength(150, { message: 'Nome deve ter no máximo 150 caracteres' }),
+        IsNotEmpty({ message: 'Nome é obrigatório' }),
+      ],
     },
   },
 })

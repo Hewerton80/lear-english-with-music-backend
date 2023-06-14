@@ -25,7 +25,7 @@ export class AuthorService {
     slug,
   }: Pick<Author, 'name' | 'slug'>) {
     if (await this.ctx.prisma.author.findFirst({ where: { OR: [{ name }, { slug }] } })) {
-      throw new GraphQLError('Já existe um autor com esse nome', {
+      throw new GraphQLError('Já existe uma banda/cantor(a) com esse nome', {
         extensions: { code: HttpStatusCode.CONFLICT, status: 409 },
       })
     }
