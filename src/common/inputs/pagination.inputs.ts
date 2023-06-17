@@ -7,7 +7,7 @@ export class PaginationInput {
   @Min(1, { message: 'currentPage deve ser no mínimo 1' })
   currentPage: number
 
-  @Min(1, { message: 'perPage deve ser no mínimo 15' })
+  @Min(15, { message: 'perPage deve ser no mínimo 15' })
   @Max(35, { message: 'perPage deve ser no máximo 35' })
   @Field(() => Number, { nullable: true, defaultValue: 25 })
   perPage: number
