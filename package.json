@@ -26,7 +26,8 @@
     "jsonwebtoken": "^9.0.0",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "2.0.0-beta.1",
-    "typedi": "^0.10.0"
+    "typedi": "^0.10.0",
+    "typescript": "^5.0.4"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
@@ -39,8 +40,7 @@
     "prisma": "^4.14.1",
     "ts-node": "^10.9.1",
     "tslib": "^2.5.0",
-    "typegraphql-prisma": "^0.25.1",
-    "typescript": "^5.0.4"
+    "typegraphql-prisma": "^0.25.1"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma",
