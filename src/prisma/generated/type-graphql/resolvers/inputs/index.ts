@@ -84,6 +84,7 @@ export { SongUpdateWithoutAuthorsInput } from "./SongUpdateWithoutAuthorsInput";
 export { SongUpsertWithoutAuthorsInput } from "./SongUpsertWithoutAuthorsInput";
 export { SongWhereInput } from "./SongWhereInput";
 export { SongWhereUniqueInput } from "./SongWhereUniqueInput";
+export { SortOrderInput } from "./SortOrderInput";
 export { StringFieldUpdateOperationsInput } from "./StringFieldUpdateOperationsInput";
 export { StringFilter } from "./StringFilter";
 export { StringNullableFilter } from "./StringNullableFilter";

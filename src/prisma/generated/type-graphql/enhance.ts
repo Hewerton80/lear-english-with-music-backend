@@ -429,6 +429,7 @@ const inputsInfo = {
   StringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
   DateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   SongAuthorListRelationFilter: ["every", "some", "none"],
+  SortOrderInput: ["sort", "nulls"],
   SongAuthorOrderByRelationAggregateInput: ["_count"],
   SongCountOrderByAggregateInput: ["id", "title", "slug", "url", "lyric", "createdAt"],
   SongMaxOrderByAggregateInput: ["id", "title", "slug", "url", "lyric", "createdAt"],

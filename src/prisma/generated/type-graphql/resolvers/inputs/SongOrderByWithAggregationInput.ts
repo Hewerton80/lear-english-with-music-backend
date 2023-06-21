@@ -5,6 +5,7 @@ import { DecimalJSScalar } from "../../scalars";
 import { SongCountOrderByAggregateInput } from "../inputs/SongCountOrderByAggregateInput";
 import { SongMaxOrderByAggregateInput } from "../inputs/SongMaxOrderByAggregateInput";
 import { SongMinOrderByAggregateInput } from "../inputs/SongMinOrderByAggregateInput";
+import { SortOrderInput } from "../inputs/SortOrderInput";
 import { SortOrder } from "../../enums/SortOrder";
 
 @TypeGraphQL.InputType("SongOrderByWithAggregationInput", {
@@ -31,10 +32,10 @@ export class SongOrderByWithAggregationInput {
   })
   url?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => SortOrder, {
+  @TypeGraphQL.Field(_type => SortOrderInput, {
     nullable: true
   })
-  lyric?: "asc" | "desc" | undefined;
+  lyric?: SortOrderInput | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true

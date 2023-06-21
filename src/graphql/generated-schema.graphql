@@ -16,7 +16,7 @@ type Author {
 }
 
 type AuthorCount {
-  songs: Int!
+  songs(where: SongAuthorWhereInput): Int!
 }
 
 input AuthorCreateInput {
@@ -123,6 +123,11 @@ input NestedStringNullableFilter {
   not: NestedStringNullableFilter
   notIn: [String!]
   startsWith: String
+}
+
+enum NullsOrder {
+  first
+  last
 }
 
 input PaginationInput {
@@ -274,7 +279,7 @@ input SongAuthorWhereUniqueInput {
 }
 
 type SongCount {
-  authors: Int!
+  authors(where: SongAuthorWhereInput): Int!
 }
 
 input SongCreateNestedOneWithoutAuthorsInput {
@@ -300,7 +305,7 @@ input SongOrderByWithRelationInput {
   authors: SongAuthorOrderByRelationAggregateInput
   createdAt: SortOrder
   id: SortOrder
-  lyric: SortOrder
+  lyric: SortOrderInput
   slug: SortOrder
   title: SortOrder
   url: SortOrder
@@ -354,6 +359,11 @@ input SongWhereUniqueInput {
 enum SortOrder {
   asc
   desc
+}
+
+input SortOrderInput {
+  nulls: NullsOrder
+  sort: SortOrder!
 }
 
 input StringFilter {

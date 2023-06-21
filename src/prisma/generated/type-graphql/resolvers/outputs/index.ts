@@ -16,3 +16,4 @@ export { SongCountAggregate } from "./SongCountAggregate";
 export { SongGroupBy } from "./SongGroupBy";
 export { SongMaxAggregate } from "./SongMaxAggregate";
 export { SongMinAggregate } from "./SongMinAggregate";
+export * from "./args";
