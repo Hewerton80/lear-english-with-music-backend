@@ -5,13 +5,12 @@ import {
   AuthorWhereInput,
   AuthorCreateInput,
   Author,
-  FindManyAuthorArgs,
   AuthorUpdateInput,
   AuthorWhereUniqueInput,
 } from '../../prisma/generated/type-graphql'
 import { PaginationInput } from '../../common/inputs/pagination.inputs'
 import { prismaPagination } from '../../helpers/getPrismaPagination'
-import { Author as PrismaAuthor, Prisma } from '@prisma/client'
+import { Author as PrismaAuthor, Prisma } from '../../prisma/generated/type-prisma'
 import { GraphQLError } from 'graphql'
 import { HttpStatusCode } from '../../types/enums/httpStatusCode'
 import { slugfy } from '../../utils/slugfy'

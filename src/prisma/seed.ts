@@ -1,9 +1,5 @@
 import 'reflect-metadata'
 import { PrismaClient } from '@prisma/client'
-import { faker } from '@faker-js/faker'
-import { getRange } from '../utils/getRange'
-import { getRandomIntInclusive } from '../utils/getRandomIntInclusive'
-import { hash } from 'bcrypt'
 import { slugfy } from '../utils/slugfy'
 
 const staticSongAuthors = [
