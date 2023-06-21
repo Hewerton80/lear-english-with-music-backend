@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "npx tsc",
+    "build": "yarn && yarn tsc",
     "start:dev": "nodemon",
     "start:prod": "npm run build && node dist/index.js",
     "migrate": "prisma migrate dev",
