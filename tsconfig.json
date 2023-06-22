@@ -20,8 +20,8 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,  
   },
-  // "exclude": [
-  //   "src/prisma/generated/type-prisma/**/*.js",
-  //   "dist/**/*.js",
-  // ]
+  "exclude": [
+    // "src/prisma/generated/type-prisma/**/*.js",
+    "dist/**/*.js",
+  ]
 }
