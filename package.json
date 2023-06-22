@@ -6,7 +6,7 @@
   "scripts": {
     "build": "yarn && yarn tsc",
     "start:dev": "nodemon",
-    "start:prod": "npm run build && node dist/index.js",
+    "start:prod": "node dist/index.js",
     "migrate": "prisma migrate dev",
     "push": "prisma db push",
     "generate": "prisma generate",

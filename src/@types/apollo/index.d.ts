@@ -1,4 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../../prisma/generated/type-prisma'
+// import { PrismaClient } from '@prisma/client'
 import { JwdDto } from 'src/modules/auth/dtos/jwt.dto'
 import { ContainerInstance } from 'typedi'
 

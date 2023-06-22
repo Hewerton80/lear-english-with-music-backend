@@ -10,6 +10,7 @@
     "lib": ["es2018", "esnext.asynciterable"],
     "sourceMap": true,
     "outDir": "./dist",
+    "allowJs": true,
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
@@ -17,6 +18,10 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,  
+  },
+  // "exclude": [
+  //   "src/prisma/generated/type-prisma/**/*.js",
+  //   "dist/**/*.js",
+  // ]
 }
