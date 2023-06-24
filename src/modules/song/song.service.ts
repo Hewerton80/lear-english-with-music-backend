@@ -9,11 +9,12 @@ import {
 } from '../../prisma/generated/type-graphql'
 import { PaginationInput } from '../../common/inputs/pagination.inputs'
 import { prismaPagination } from '../../helpers/getPrismaPagination'
-import { Song as PrismaSong, Prisma } from '../../prisma/generated/type-prisma'
-import { GraphQLError } from 'graphql'
+// import { Song as PrismaSong, Prisma } from '../../prisma/generated/type-prisma'
+import { Song as PrismaSong, Prisma } from '@prisma/client'
 import { HttpStatusCode } from '../../types/enums/httpStatusCode'
 import { slugfy } from '../../utils/slugfy'
 import { AuthorService } from '../author/author.service'
+import { GraphQLError } from 'graphql'
 
 @Service()
 export class SongService {

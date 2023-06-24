@@ -1,4 +1,4 @@
-import { Prisma } from "./../type-prisma";
+import { Prisma } from "@prisma/client";
 import { GraphQLScalarType } from "graphql";
 
 export const DecimalJSScalar = new GraphQLScalarType({

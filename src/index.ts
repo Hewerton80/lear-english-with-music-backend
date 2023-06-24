@@ -4,8 +4,8 @@ import { buildSchema, ResolverData } from 'type-graphql'
 import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
 import { resolve } from 'path'
-import { PrismaClient } from './prisma/generated/type-prisma'
-// import { PrismaClient } from '@prisma/client'
+// import { PrismaClient } from './prisma/generated/type-prisma'
+import { PrismaClient } from '@prisma/client'
 import { Container } from 'typedi'
 import { resolvers } from './modules'
 import { apolloFormatError } from './utils/errors'
@@ -44,7 +44,6 @@ async function bootstrap() {
 
   const PORT = process.env.PORT || 3001
   const { url } = await startStandaloneServer(server, {
-    // context: getApolloContext(prismaClient),
     context: getApolloContext(prismaClient),
 
     listen: { port: Number(PORT) },
