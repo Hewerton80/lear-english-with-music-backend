@@ -1,0 +1,35 @@
+import type { GraphQLResolveInfo } from "graphql";
+import { AggregateSongArgs } from "./args/AggregateSongArgs";
+import { CreateManySongArgs } from "./args/CreateManySongArgs";
+import { CreateOneSongArgs } from "./args/CreateOneSongArgs";
+import { DeleteManySongArgs } from "./args/DeleteManySongArgs";
+import { DeleteOneSongArgs } from "./args/DeleteOneSongArgs";
+import { FindFirstSongArgs } from "./args/FindFirstSongArgs";
+import { FindFirstSongOrThrowArgs } from "./args/FindFirstSongOrThrowArgs";
+import { FindManySongArgs } from "./args/FindManySongArgs";
+import { FindUniqueSongArgs } from "./args/FindUniqueSongArgs";
+import { FindUniqueSongOrThrowArgs } from "./args/FindUniqueSongOrThrowArgs";
+import { GroupBySongArgs } from "./args/GroupBySongArgs";
+import { UpdateManySongArgs } from "./args/UpdateManySongArgs";
+import { UpdateOneSongArgs } from "./args/UpdateOneSongArgs";
+import { UpsertOneSongArgs } from "./args/UpsertOneSongArgs";
+import { Song } from "../../../models/Song";
+import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
+import { AggregateSong } from "../../outputs/AggregateSong";
+import { SongGroupBy } from "../../outputs/SongGroupBy";
+export declare class SongCrudResolver {
+    aggregateSong(ctx: any, info: GraphQLResolveInfo, args: AggregateSongArgs): Promise<AggregateSong>;
+    createManySong(ctx: any, info: GraphQLResolveInfo, args: CreateManySongArgs): Promise<AffectedRowsOutput>;
+    createOneSong(ctx: any, info: GraphQLResolveInfo, args: CreateOneSongArgs): Promise<Song>;
+    deleteManySong(ctx: any, info: GraphQLResolveInfo, args: DeleteManySongArgs): Promise<AffectedRowsOutput>;
+    deleteOneSong(ctx: any, info: GraphQLResolveInfo, args: DeleteOneSongArgs): Promise<Song | null>;
+    findFirstSong(ctx: any, info: GraphQLResolveInfo, args: FindFirstSongArgs): Promise<Song | null>;
+    findFirstSongOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindFirstSongOrThrowArgs): Promise<Song | null>;
+    songs(ctx: any, info: GraphQLResolveInfo, args: FindManySongArgs): Promise<Song[]>;
+    song(ctx: any, info: GraphQLResolveInfo, args: FindUniqueSongArgs): Promise<Song | null>;
+    getSong(ctx: any, info: GraphQLResolveInfo, args: FindUniqueSongOrThrowArgs): Promise<Song | null>;
+    groupBySong(ctx: any, info: GraphQLResolveInfo, args: GroupBySongArgs): Promise<SongGroupBy[]>;
+    updateManySong(ctx: any, info: GraphQLResolveInfo, args: UpdateManySongArgs): Promise<AffectedRowsOutput>;
+    updateOneSong(ctx: any, info: GraphQLResolveInfo, args: UpdateOneSongArgs): Promise<Song | null>;
+    upsertOneSong(ctx: any, info: GraphQLResolveInfo, args: UpsertOneSongArgs): Promise<Song>;
+}

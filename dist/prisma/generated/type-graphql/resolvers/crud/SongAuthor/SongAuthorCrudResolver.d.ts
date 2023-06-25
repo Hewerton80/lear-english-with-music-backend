@@ -1,0 +1,35 @@
+import type { GraphQLResolveInfo } from "graphql";
+import { AggregateSongAuthorArgs } from "./args/AggregateSongAuthorArgs";
+import { CreateManySongAuthorArgs } from "./args/CreateManySongAuthorArgs";
+import { CreateOneSongAuthorArgs } from "./args/CreateOneSongAuthorArgs";
+import { DeleteManySongAuthorArgs } from "./args/DeleteManySongAuthorArgs";
+import { DeleteOneSongAuthorArgs } from "./args/DeleteOneSongAuthorArgs";
+import { FindFirstSongAuthorArgs } from "./args/FindFirstSongAuthorArgs";
+import { FindFirstSongAuthorOrThrowArgs } from "./args/FindFirstSongAuthorOrThrowArgs";
+import { FindManySongAuthorArgs } from "./args/FindManySongAuthorArgs";
+import { FindUniqueSongAuthorArgs } from "./args/FindUniqueSongAuthorArgs";
+import { FindUniqueSongAuthorOrThrowArgs } from "./args/FindUniqueSongAuthorOrThrowArgs";
+import { GroupBySongAuthorArgs } from "./args/GroupBySongAuthorArgs";
+import { UpdateManySongAuthorArgs } from "./args/UpdateManySongAuthorArgs";
+import { UpdateOneSongAuthorArgs } from "./args/UpdateOneSongAuthorArgs";
+import { UpsertOneSongAuthorArgs } from "./args/UpsertOneSongAuthorArgs";
+import { SongAuthor } from "../../../models/SongAuthor";
+import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
+import { AggregateSongAuthor } from "../../outputs/AggregateSongAuthor";
+import { SongAuthorGroupBy } from "../../outputs/SongAuthorGroupBy";
+export declare class SongAuthorCrudResolver {
+    aggregateSongAuthor(ctx: any, info: GraphQLResolveInfo, args: AggregateSongAuthorArgs): Promise<AggregateSongAuthor>;
+    createManySongAuthor(ctx: any, info: GraphQLResolveInfo, args: CreateManySongAuthorArgs): Promise<AffectedRowsOutput>;
+    createOneSongAuthor(ctx: any, info: GraphQLResolveInfo, args: CreateOneSongAuthorArgs): Promise<SongAuthor>;
+    deleteManySongAuthor(ctx: any, info: GraphQLResolveInfo, args: DeleteManySongAuthorArgs): Promise<AffectedRowsOutput>;
+    deleteOneSongAuthor(ctx: any, info: GraphQLResolveInfo, args: DeleteOneSongAuthorArgs): Promise<SongAuthor | null>;
+    findFirstSongAuthor(ctx: any, info: GraphQLResolveInfo, args: FindFirstSongAuthorArgs): Promise<SongAuthor | null>;
+    findFirstSongAuthorOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindFirstSongAuthorOrThrowArgs): Promise<SongAuthor | null>;
+    songAuthors(ctx: any, info: GraphQLResolveInfo, args: FindManySongAuthorArgs): Promise<SongAuthor[]>;
+    songAuthor(ctx: any, info: GraphQLResolveInfo, args: FindUniqueSongAuthorArgs): Promise<SongAuthor | null>;
+    getSongAuthor(ctx: any, info: GraphQLResolveInfo, args: FindUniqueSongAuthorOrThrowArgs): Promise<SongAuthor | null>;
+    groupBySongAuthor(ctx: any, info: GraphQLResolveInfo, args: GroupBySongAuthorArgs): Promise<SongAuthorGroupBy[]>;
+    updateManySongAuthor(ctx: any, info: GraphQLResolveInfo, args: UpdateManySongAuthorArgs): Promise<AffectedRowsOutput>;
+    updateOneSongAuthor(ctx: any, info: GraphQLResolveInfo, args: UpdateOneSongAuthorArgs): Promise<SongAuthor | null>;
+    upsertOneSongAuthor(ctx: any, info: GraphQLResolveInfo, args: UpsertOneSongAuthorArgs): Promise<SongAuthor>;
+}

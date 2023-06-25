@@ -45,17 +45,17 @@ export class SongService {
 
   findMany({
     paginationInput,
-    orderBy,
     where,
+    orderBy,
   }: {
     paginationInput?: PaginationInput
-    orderBy?: SongOrderByWithRelationInput
     where?: SongWhereInput
+    orderBy?: SongOrderByWithRelationInput
   }) {
     return prismaPagination<
       PrismaSong,
-      Prisma.SongWhereInput,
-      Prisma.SongOrderByWithRelationInput
+      SongWhereInput,
+      SongOrderByWithRelationInput
     >({
       model: this.ctx.prisma.song,
       where,
