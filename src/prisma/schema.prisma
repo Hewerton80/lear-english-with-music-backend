@@ -1,6 +1,7 @@
 generator client {
     provider = "prisma-client-js"
     output = "./generated/type-prisma"
+    binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
 generator typegraphql {
