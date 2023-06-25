@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "nnpx prisma generate",
+  "buildCommand": "npx prisma generate",
   "builds": [
     {
       "src": "dist/index.js",
