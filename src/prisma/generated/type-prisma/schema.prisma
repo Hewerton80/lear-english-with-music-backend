@@ -1,6 +1,6 @@
 generator client {
     provider = "prisma-client-js"
-    output   = "./generated/type-prisma"
+    output = "./generated/type-prisma"
 }
 
 generator typegraphql {

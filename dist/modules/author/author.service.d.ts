@@ -1,6 +1,5 @@
 import { FindUniqueAuthorArgs, AuthorOrderByWithRelationInput, AuthorWhereInput, AuthorCreateInput, AuthorUpdateInput, AuthorWhereUniqueInput } from '../../prisma/generated/type-graphql';
 import { PaginationInput } from '../../common/inputs/pagination.inputs';
-import { Author as PrismaAuthor } from '@prisma/client';
 export declare class AuthorService {
     private readonly ctx;
     constructor(ctx: ApolloContext);
@@ -9,9 +8,29 @@ export declare class AuthorService {
         paginationInput?: PaginationInput;
         orderBy?: AuthorOrderByWithRelationInput;
         where?: AuthorWhereInput;
-    }): Promise<import("../../helpers/getPrismaPagination").IPaginatedResult<PrismaAuthor>>;
+    }): Promise<import("../../helpers/getPrismaPagination").IPaginatedResult<import("../../prisma/generated/type-prisma/runtime").GetResult<{
+        id: string;
+        name: string;
+        slug: string;
+        createdAt: Date;
+    }, unknown> & {}>>;
     count(authorWhereInput: AuthorWhereInput): Promise<number>;
-    findOne(findUniqueAuthorArgs?: FindUniqueAuthorArgs): Promise<PrismaAuthor>;
-    create({ name }: AuthorCreateInput): Promise<PrismaAuthor>;
-    update({ name }: AuthorUpdateInput, where: AuthorWhereUniqueInput): Promise<PrismaAuthor>;
+    findOne(findUniqueAuthorArgs?: FindUniqueAuthorArgs): Promise<import("../../prisma/generated/type-prisma/runtime").GetResult<{
+        id: string;
+        name: string;
+        slug: string;
+        createdAt: Date;
+    }, unknown> & {}>;
+    create({ name }: AuthorCreateInput): Promise<import("../../prisma/generated/type-prisma/runtime").GetResult<{
+        id: string;
+        name: string;
+        slug: string;
+        createdAt: Date;
+    }, unknown> & {}>;
+    update({ name }: AuthorUpdateInput, where: AuthorWhereUniqueInput): Promise<import("../../prisma/generated/type-prisma/runtime").GetResult<{
+        id: string;
+        name: string;
+        slug: string;
+        createdAt: Date;
+    }, unknown> & {}>;
 }

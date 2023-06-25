@@ -1,6 +1,5 @@
 import { FindUniqueSongArgs, SongCreateWithoutAuthorsInput, SongOrderByWithRelationInput, SongUpdateWithoutAuthorsInput, SongWhereInput, SongWhereUniqueInput } from '../../prisma/generated/type-graphql';
 import { PaginationInput } from '../../common/inputs/pagination.inputs';
-import { Song as PrismaSong } from '@prisma/client';
 import { AuthorService } from '../author/author.service';
 export declare class SongService {
     private readonly ctx;
@@ -12,15 +11,43 @@ export declare class SongService {
         paginationInput?: PaginationInput;
         where?: SongWhereInput;
         orderBy?: SongOrderByWithRelationInput;
-    }): Promise<import("../../helpers/getPrismaPagination").IPaginatedResult<PrismaSong>>;
-    findOne(findUniqueSongArgs?: FindUniqueSongArgs): Promise<PrismaSong>;
+    }): Promise<import("../../helpers/getPrismaPagination").IPaginatedResult<import("../../prisma/generated/type-prisma/runtime").GetResult<{
+        id: string;
+        title: string;
+        slug: string;
+        url: string;
+        lyric: string;
+        createdAt: Date;
+    }, unknown> & {}>>;
+    findOne(findUniqueSongArgs?: FindUniqueSongArgs): Promise<import("../../prisma/generated/type-prisma/runtime").GetResult<{
+        id: string;
+        title: string;
+        slug: string;
+        url: string;
+        lyric: string;
+        createdAt: Date;
+    }, unknown> & {}>;
     create({ songCreateWithoutAuthorsInput, authorIds, }: {
         songCreateWithoutAuthorsInput: SongCreateWithoutAuthorsInput;
         authorIds: string[];
-    }): Promise<PrismaSong>;
+    }): Promise<import("../../prisma/generated/type-prisma/runtime").GetResult<{
+        id: string;
+        title: string;
+        slug: string;
+        url: string;
+        lyric: string;
+        createdAt: Date;
+    }, unknown> & {}>;
     update({ songUpdateWithoutAuthorsInput, authorIds, songWhereUniqueInput, }: {
         songUpdateWithoutAuthorsInput: SongUpdateWithoutAuthorsInput;
         authorIds: string[];
         songWhereUniqueInput: SongWhereUniqueInput;
-    }): Promise<PrismaSong>;
+    }): Promise<import("../../prisma/generated/type-prisma/runtime").GetResult<{
+        id: string;
+        title: string;
+        slug: string;
+        url: string;
+        lyric: string;
+        createdAt: Date;
+    }, unknown> & {}>;
 }

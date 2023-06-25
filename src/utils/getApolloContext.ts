@@ -1,5 +1,5 @@
-// import { PrismaClient } from '../prisma/generated/type-prisma'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../prisma/generated/type-prisma'
+// import { PrismaClient } from '@prisma/client'
 import Container from 'typedi'
 import { getRandomIntInclusive } from './getRandomIntInclusive'
 

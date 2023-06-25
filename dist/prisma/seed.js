@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
-const client_1 = require("@prisma/client");
+const type_prisma_1 = require("../prisma/generated/type-prisma");
 const slugfy_1 = require("../utils/slugfy");
 const staticSongAuthors = [
     'AC/DC',
@@ -44,7 +44,7 @@ const staticSongAuthors = [
     'Twenty One Pilots',
     'U2',
 ];
-const prismaClient = new client_1.PrismaClient();
+const prismaClient = new type_prisma_1.PrismaClient();
 async function main() {
     await prismaClient.author.createMany({
         data: staticSongAuthors.map((name) => ({

@@ -6,14 +6,14 @@ const type_graphql_1 = require("type-graphql");
 const server_1 = require("@apollo/server");
 const standalone_1 = require("@apollo/server/standalone");
 const path_1 = require("path");
-const client_1 = require("@prisma/client");
+const type_prisma_1 = require("./prisma/generated/type-prisma");
 const typedi_1 = require("typedi");
 const modules_1 = require("./modules");
 const errors_1 = require("./utils/errors");
 const getApolloContext_1 = require("./utils/getApolloContext");
 dotenv.config();
 async function bootstrap() {
-    const prismaClient = new client_1.PrismaClient();
+    const prismaClient = new type_prisma_1.PrismaClient();
     await prismaClient.$connect();
     const schema = await (0, type_graphql_1.buildSchema)({
         resolvers: modules_1.resolvers,

@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc && cp -R src/prisma/generated/type-prisma dist/prisma/generated/type-prisma",
     "start:dev": "nodemon",
     "start:prod": "node dist/index.js",
     "ts.check": "tsc --project tsconfig.json",

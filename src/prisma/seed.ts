@@ -1,5 +1,6 @@
 import 'reflect-metadata'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../prisma/generated/type-prisma'
+// import { PrismaClient } from '@prisma/client'
 import { slugfy } from '../utils/slugfy'
 
 const staticSongAuthors = [
