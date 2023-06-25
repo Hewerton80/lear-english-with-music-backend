@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "yarn tsc && cp -R src/prisma/generated/type-prisma srdistc/prisma/generated/type-prisma",
+    "build": "yarn tsc",
     "start:dev": "nodemon",
     "start:prod": "node dist/index.js",
     "migrate": "prisma migrate dev",
